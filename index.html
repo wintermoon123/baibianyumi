@@ -207,6 +207,8 @@ h2.sec small{font-size:12px;color:var(--muted);font-weight:400;font-family:"Noto
 .savehd .x{font-size:22px;color:var(--muted);line-height:1;cursor:pointer;flex:0 0 auto}
 .savesheet img{width:100%;display:block;border-radius:12px;border:1px solid var(--line)}
 .savetip{font-size:11.5px;color:var(--muted);text-align:center;margin:10px 0 0;line-height:1.65}
+.savename{font-size:11px;color:var(--forest-dark);text-align:center;margin:10px 0 0;line-height:1.5;word-break:break-all;opacity:.85}
+.savename b{font-weight:600}
 .toast{position:absolute;left:50%;bottom:80px;transform:translateX(-50%);background:rgba(27,60,27,.92);color:#fff;font-size:13px;padding:9px 16px;border-radius:99px;opacity:0;transition:.25s;z-index:30;pointer-events:none}
 .toast.show{opacity:1}
 .foot-note{text-align:center;color:var(--muted);font-size:11px;margin-top:18px;line-height:1.6}
@@ -431,6 +433,7 @@ h2.sec small{font-size:12px;color:var(--muted);font-weight:400;font-family:"Noto
     <div class="savesheet">
       <div class="savehd"><span>长按图片 → 保存到相册</span><span class="x" onclick="closeSave()">×</span></div>
       <img id="saveImg" alt="分享卡" />
+      <p class="savename">文件名：<b id="saveName"></b></p>
       <p class="savetip">iPhone 存到「照片」，安卓存到「相册 / 下载」</p>
       <button class="btn ghost block" style="margin-top:12px" onclick="closeSave()">关闭</button>
     </div>
@@ -3048,9 +3051,15 @@ function wrapLines(ctx,text,x,y,maxW,lh){
 }
 function measureCN(ctx,text,maxW){let n=1,line='';for(const ch of text){if(ctx.measureText(line+ch).width>maxW){n++;line=ch;}else line+=ch;}return n;}
 function closeSave(){document.getElementById('saveMask').classList.remove('show');}
+function shareFileName(){
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  return `百变玉米_每日一题_${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}.png`;
+}
 function openSaveLayer(url){
   const img=document.getElementById('saveImg');
   img.src=url;
+  img.setAttribute('download',shareFileName());
+  document.getElementById('saveName').textContent=shareFileName();
   document.getElementById('saveMask').classList.add('show');
 }
 function downloadShare(){
@@ -3066,10 +3075,10 @@ function downloadShare(){
       if(!blob){openSaveLayer(url);return;}
       const u=URL.createObjectURL(blob);
       const a=document.createElement('a');
-      a.href=u;a.download='循塑100_每日一题.png';
+      a.href=u;a.download=shareFileName();
       document.body.appendChild(a);a.click();a.remove();
       setTimeout(()=>URL.revokeObjectURL(u),5000);
-      toast('已保存到下载文件夹');
+      toast('已保存：'+shareFileName());
     },'image/png');
   }catch(e){openSaveLayer(url);}
 }
