@@ -40,10 +40,10 @@ body{
 .phone{
   max-width:390px;margin:22px auto;background:var(--cream-2);
   border-radius:34px;overflow:hidden;box-shadow:0 24px 60px rgba(30,60,30,.22);
-  display:flex;flex-direction:column;height:calc(100vh - 44px);
+  display:flex;flex-direction:column;height:calc(100vh - 44px);height:calc(100dvh - 44px);
   position:relative;border:1px solid #E2E2D6;
 }
-@media(max-width:480px){ .phone{margin:0;border-radius:0;height:100vh;border:none} }
+@media(max-width:480px){ .phone{margin:0;border-radius:0;border:none;height:100vh;height:100dvh;height:var(--app-h,100dvh)} }
 .topbar{
   display:flex;align-items:center;gap:9px;padding:14px 18px 10px;
   background:linear-gradient(180deg, #fff, #FCFBF4);border-bottom:1px solid var(--line);
@@ -2723,6 +2723,18 @@ var qrcode = function() {
 
 </script>
 <script>
+/* ============ 视口高度：让底部导航留在可视区内 ============ */
+(function(){
+  var root=document.documentElement;
+  function fitH(){
+    var h=window.innerHeight||root.clientHeight;
+    if(h>0) root.style.setProperty('--app-h',h+'px');
+  }
+  fitH();
+  window.addEventListener('resize',fitH,{passive:true});
+  window.addEventListener('pageshow',fitH);
+  window.addEventListener('orientationchange',function(){setTimeout(fitH,150);});
+})();
 /* ============ 用户态（localStorage 模拟） ============ */
 const LS='xunsu_user_v1';
 function uid(){return 'XS100_'+Math.random().toString(36).slice(2,6).toUpperCase()}
