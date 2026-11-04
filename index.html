@@ -1,0 +1,3080 @@
+<!DOCTYPE html>
+<!--
+  图片来源（均为真实实拍照片，来自 Pexels，遵循 Pexels License：可免费商用、可修改、无需署名）
+    img/story-1.jpg  农户手持玉米      https://www.pexels.com/photo/3307282/
+    img/story-2.jpg  编织篮            https://www.pexels.com/photo/24811442/
+    img/story-3.jpg  彩色观赏玉米      https://www.pexels.com/photo/1527005/
+    img/prod-1.jpg   观赏玉米（文玩）  https://www.pexels.com/photo/33853176/
+    img/prod-2.jpg   手工编织篮        https://www.pexels.com/photo/28617395/
+    img/prod-3.jpg   糙米              https://www.pexels.com/photo/8108115/
+    img/prod-4.jpg   贴纸              https://www.pexels.com/photo/12413393/
+  替换成正式素材时，只要覆盖 img/ 下同名文件即可，无需改代码。
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>百变玉米</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --forest:#228B22; --forest-dark:#1B5E20; --forest-soft:#3F7A33;
+  --earth:#8B4513; --earth-soft:#A9682F;
+  --sky:#87CEEB; --sky-soft:#A9DCEF;
+  --cream:#F5F5DC; --cream-2:#FBFAF2;
+  --ink:#2B3A2B; --muted:#6B756B; --line:#E7ECDD;
+  --card:#FFFFFF; --shadow:0 8px 24px rgba(34,139,34,.10);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  color:var(--ink); -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(135,206,235,.20), transparent 60%),
+    radial-gradient(1000px 500px at -10% 10%, rgba(34,139,34,.14), transparent 55%),
+    #EDEDE3;
+}
+/* 手机外框 */
+.phone{
+  max-width:390px;margin:22px auto;background:var(--cream-2);
+  border-radius:34px;overflow:hidden;box-shadow:0 24px 60px rgba(30,60,30,.22);
+  display:flex;flex-direction:column;height:calc(100vh - 44px);
+  position:relative;border:1px solid #E2E2D6;
+}
+@media(max-width:480px){ .phone{margin:0;border-radius:0;height:100vh;border:none} }
+.topbar{
+  display:flex;align-items:center;gap:9px;padding:14px 18px 10px;
+  background:linear-gradient(180deg, #fff, #FCFBF4);border-bottom:1px solid var(--line);
+}
+.brand{display:flex;align-items:center;gap:8px;font-family:"Noto Serif SC",serif;font-weight:700;font-size:18px;color:var(--forest-dark);letter-spacing:.5px}
+.brand svg{width:24px;height:24px;color:var(--forest);flex:0 0 auto}
+.demo-tag{margin-left:auto;font-size:11px;color:#fff;background:var(--forest-soft);padding:3px 9px;border-radius:99px;font-weight:500}
+.views{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px 24px}
+.view{display:none;animation:fade .3s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+h2.sec{font-family:"Noto Serif SC",serif;font-size:18px;color:var(--forest-dark);margin:4px 2px 12px;display:flex;align-items:center;gap:8px}
+h2.sec small{font-size:12px;color:var(--muted);font-weight:400;font-family:"Noto Sans SC",sans-serif}
+.card{background:var(--card);border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line)}
+/* 百变玉米入口 */
+.hero-corn{position:relative;border-radius:20px;overflow:hidden;padding:18px;color:#fff;box-shadow:var(--shadow);
+  background:linear-gradient(135deg,var(--forest),var(--forest-dark));cursor:pointer}
+.hero-corn .row{display:flex;align-items:center;gap:14px}
+.hero-corn img{width:74px;height:74px;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+.hero-corn h3{margin:0;font-family:"Noto Serif SC",serif;font-size:19px}
+.hero-corn p{margin:4px 0 0;font-size:12.5px;opacity:.9}
+.hero-corn .arrow{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:22px;opacity:.8}
+.block-title{font-size:14px;font-weight:700;color:var(--ink);margin:22px 4px 10px;display:flex;align-items:center;gap:6px}
+.block-title svg{width:17px;height:17px;color:var(--forest-soft)}
+.hscroll{display:flex;gap:12px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory}
+.hscroll>*{scroll-snap-align:start;flex:0 0 auto}
+.vstack{display:flex;flex-direction:column;gap:12px;padding:2px 2px 4px}
+.story{border-radius:16px;overflow:hidden;box-shadow:var(--shadow);background:#fff;border:1px solid var(--line)}
+.vstack .story{display:flex;flex-direction:column}
+.story .ph{height:140px;background-size:cover;background-position:center}
+.story .body{padding:10px 12px 13px}
+.story .body h4{margin:0 0 4px;font-size:14px}
+.story .body p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+.story .tag{display:inline-block;font-size:10.5px;color:var(--forest);background:rgba(34,139,34,.1);border-radius:99px;padding:2px 8px;margin-bottom:6px}
+.story .body .src-link{display:inline-block;margin-top:8px;font-size:12px;font-weight:600;color:var(--forest);text-decoration:none;border-bottom:1.5px solid var(--forest)}
+.story .body .src-link:hover{opacity:.75}
+.ez{display:grid;grid-template-columns:1fr;gap:12px}
+.ez .item{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.ez .item h4{margin:0 0 5px;font-size:13.5px;color:var(--forest-dark)}
+.ez .item p{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+.evt{display:flex;gap:12px;padding:12px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:10px}
+.evt .date{flex:0 0 50px;text-align:center;color:var(--forest-dark);font-weight:700;font-family:"Noto Serif SC",serif}
+.evt .date small{display:block;font-size:10px;color:var(--muted);font-weight:400;font-family:"Noto Sans SC"}
+.evt .info h4{margin:0 0 3px;font-size:14px}
+.evt .info p{margin:0;font-size:12px;color:var(--muted)}
+.prod-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.prod{border-radius:16px;overflow:hidden;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.prod .ph{height:96px;background-size:cover;background-position:center;display:flex;align-items:flex-end;justify-content:space-between;padding:8px}
+.prod .ph .price{background:#fff;color:var(--earth);font-weight:700;font-size:12px;border-radius:99px;padding:2px 9px}
+.prod .ph .kind{background:rgba(27,94,32,.85);color:#fff;font-size:10.5px;border-radius:99px;padding:2px 8px}
+.prod .body{padding:10px 11px 12px}
+.prod .body h4{margin:0 0 6px;font-size:13.5px}
+.btn{border:none;font-family:inherit;cursor:pointer;border-radius:99px;font-weight:700;font-size:13px;padding:8px 14px;background:var(--forest);color:#fff;box-shadow:0 4px 12px rgba(34,139,34,.28);transition:.15s}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:#fff;color:var(--forest-dark);border:1px solid var(--forest-soft)}
+.btn.block{width:100%}
+.game-lock{border:1.5px dashed var(--forest-soft);background:rgba(34,139,34,.05);border-radius:16px;padding:22px;text-align:center;color:var(--forest-soft)}
+.game-lock svg{width:34px;height:34px;opacity:.7}
+.game-lock p{margin:8px 0 0;font-size:13px}
+/* 每日一题 */
+.quiz{padding:18px;border-radius:20px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow)}
+.quiz .cat{display:inline-block;font-size:11px;color:#fff;background:var(--sky-soft);color:var(--forest-dark);border-radius:99px;padding:3px 10px;font-weight:600}
+.quiz h3{margin:10px 0 14px;font-size:17px;line-height:1.45}
+.opt{display:flex;align-items:center;gap:11px;padding:13px 14px;border:1.5px solid var(--line);border-radius:14px;margin-bottom:10px;cursor:pointer;font-size:14px;transition:.15s;background:#fff}
+.opt:hover{border-color:var(--forest-soft)}
+.opt.sel{border-color:var(--forest);background:rgba(34,139,34,.06)}
+.opt .dot{flex:0 0 20px;width:20px;height:20px;border-radius:50%;border:2px solid #C9D3BE;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+.opt.correct{border-color:var(--forest);background:rgba(34,139,34,.10)}
+.opt.correct .dot{background:var(--forest);border-color:var(--forest)}
+.opt.dim{opacity:.55}
+.feedback{margin-top:6px;padding:12px 14px;border-radius:14px;background:rgba(135,206,235,.14);font-size:13px;line-height:1.55}
+.feedback b{color:var(--forest-dark)}
+.feedback .src{display:block;margin-top:6px;color:var(--muted);font-size:11.5px}
+.qfoot{margin-top:16px;text-align:center;font-size:12px;color:var(--muted)}
+.done-box{text-align:center;padding:26px 18px}
+.done-box .big{font-family:"Noto Serif SC",serif;font-size:22px;color:var(--forest-dark)}
+.done-box p{color:var(--muted);font-size:13px;margin:8px 0 16px}
+/* 点子市集 */
+.persp{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 10px;margin-bottom:4px}
+.persp button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:7px 13px;font-size:12.5px;color:var(--muted);white-space:nowrap;cursor:pointer;font-family:inherit}
+.persp button.on{background:var(--earth);color:#fff;border-color:var(--earth)}
+.idea{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);margin-bottom:11px}
+.idea .top{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.idea .ptag{font-size:10.5px;background:rgba(139,69,19,.12);color:var(--earth);border-radius:99px;padding:2px 9px;font-weight:600}
+.idea h4{margin:0;font-size:14.5px;color:var(--forest-dark)}
+.idea p{margin:0 0 7px;font-size:12.5px;color:var(--muted);line-height:1.55}
+.idea .owner{font-size:11px;color:var(--forest-soft)}
+.tip{padding:14px;border-radius:16px;background:linear-gradient(135deg,#FBFAF2,#F0F4E6);border:1px solid var(--line);margin-bottom:11px}
+.tip h4{margin:0 0 5px;font-size:13.5px;color:var(--forest-dark);display:flex;align-items:center;gap:6px}
+.tip p{margin:0;font-size:12px;color:var(--muted);line-height:1.55}
+.flow{background:#fff;border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow);margin-top:6px}
+.flow h4{margin:0 0 10px;font-size:14px;color:var(--forest-dark)}
+.flow .steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.flow .step{background:rgba(34,139,34,.08);border-radius:10px;padding:7px 10px;font-size:12px;color:var(--forest-dark)}
+.flow .arr{color:var(--muted);font-size:13px}
+.flow p.note{margin:11px 0 0;font-size:11.5px;color:var(--muted);line-height:1.6}
+/* 我的 */
+.profile-head{display:flex;gap:14px;align-items:center;padding:18px;border-radius:20px;background:linear-gradient(135deg,#fff,#F3F7EA);box-shadow:var(--shadow);border:1px solid var(--line);margin-bottom:14px}
+.avatar{width:66px;height:66px;border-radius:50%;overflow:hidden;border:3px solid #fff;box-shadow:0 4px 12px rgba(34,139,34,.2);background:var(--cream);flex:0 0 66px}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.profile-head .nm{font-family:"Noto Serif SC",serif;font-size:18px;font-weight:700;color:var(--forest-dark)}
+.profile-head .meta{font-size:11.5px;color:var(--muted);margin-top:3px}
+.stat-row{display:flex;gap:10px;margin-bottom:14px}
+.stat{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center;box-shadow:var(--shadow)}
+.stat .v{font-family:"Noto Serif SC",serif;font-size:22px;font-weight:700;color:var(--forest)}
+.stat .l{font-size:11px;color:var(--muted);margin-top:2px}
+.rec{background:#fff;border:1px solid var(--line);border-radius:16px;padding:6px 13px;box-shadow:var(--shadow);margin-bottom:11px}
+.rec .row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:12.5px}
+.rec .row:last-child{border-bottom:none}
+.rec .ok{width:18px;height:18px;border-radius:50%;background:var(--forest);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;flex:0 0 18px}
+.rec .no{background:#C0392B}
+.rec .q{flex:1;color:var(--ink)}
+.rec .d{color:var(--muted);font-size:11px}
+.rec .pt{color:var(--earth);font-weight:700}
+.rec .row.click{cursor:pointer}
+.rec .row.click:active{background:rgba(34,139,34,.06)}
+.rec-detail-q{font-size:14.5px;font-weight:600;color:var(--forest-dark);line-height:1.5;margin:2px 0 14px}
+.rec-opt{padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:13px;margin-bottom:8px;display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+.rec-opt b{color:var(--muted);min-width:14px}
+.rec-opt.correct{background:rgba(34,139,34,.1);border-color:var(--forest)}
+.rec-opt.correct b{color:var(--forest-dark)}
+.rec-opt.wrong{background:rgba(192,57,43,.1);border-color:#C0392B}
+.rec-opt.wrong b{color:#C0392B}
+.rec-src{font-size:12px;color:var(--muted);background:rgba(34,139,34,.06);border-radius:12px;padding:10px 12px;margin-top:6px;line-height:1.6}
+.rec-meta{font-size:12px;color:var(--ink);margin:12px 0 0}
+.own-card{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow);cursor:pointer}
+.own-card:active{transform:scale(.98)}
+.own-card .thumb{width:54px;height:72px;border-radius:10px;flex:0 0 54px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.own-card .thumb svg{width:100%;height:100%;display:block}
+.own-card .view-hint{margin-left:auto;font-size:12px;color:var(--forest);white-space:nowrap}
+.corn-entries{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:2px}
+.corn-entry{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 12px;box-shadow:var(--shadow);cursor:pointer;text-align:center}
+.corn-entry:active{transform:scale(.98)}
+.corn-entry svg{width:30px;height:30px;color:var(--forest)}
+.corn-entry span{font-size:13px;font-weight:600;color:var(--forest-dark)}
+.own-card .info h4{margin:0 0 3px;font-size:14px;color:var(--forest-dark)}
+.own-card .info p{margin:0;font-size:11.5px;color:var(--muted)}
+.fan{text-align:center;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow);margin-top:11px}
+.fan .qr{width:120px;height:120px;margin:6px auto 8px;background:#fff;border-radius:12px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center}
+.fan .qr svg{width:108px;height:108px}
+.fan p{margin:0;font-size:12px;color:var(--muted)}
+/* 底部导航 */
+.tabbar{display:flex;background:#fff;border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom));}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;border:none;background:none;cursor:pointer;color:var(--muted);font-family:inherit;font-size:11px}
+.tab svg{width:23px;height:23px}
+.tab.on{color:var(--forest)}
+.tab.on svg{color:var(--forest)}
+/* 弹层 */
+.mask{position:absolute;inset:0;background:rgba(20,30,20,.5);display:none;align-items:center;justify-content:center;padding:22px;z-index:20}
+.mask.show{display:flex}
+.sheet{background:#fff;border-radius:22px;max-width:360px;width:100%;max-height:88%;overflow-y:auto;padding:18px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.sheet h3{margin:0 0 12px;font-family:"Noto Serif SC",serif;font-size:18px;color:var(--forest-dark);display:flex;align-items:center;justify-content:space-between}
+.sheet .x{font-size:20px;color:var(--muted);cursor:pointer;line-height:1}
+.bigcard{width:222px;margin:0 auto 14px;border-radius:16px;overflow:hidden;box-shadow:0 10px 24px rgba(40,60,40,.18)}
+.bigcard svg{display:block;width:100%;height:auto}
+.share-canvas{width:100%;border-radius:16px;display:block;border:1px solid var(--line)}
+.toast{position:absolute;left:50%;bottom:80px;transform:translateX(-50%);background:rgba(27,60,27,.92);color:#fff;font-size:13px;padding:9px 16px;border-radius:99px;opacity:0;transition:.25s;z-index:30;pointer-events:none}
+.toast.show{opacity:1}
+.foot-note{text-align:center;color:var(--muted);font-size:11px;margin-top:18px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="phone">
+  <div class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 56 56" fill="currentColor" aria-hidden="true"><path d="M50.7,31.7c-1.7-0.5-3.6-0.5-5.4,0.1l-6.2,2c-0.1-0.4-0.4-0.9-0.9-1.4c-1-1.1-2.6-1.8-4.2-1.8h-5.3c-0.3,0-0.7-0.1-0.9-0.3 c-3.9-3.3-8.4-1.8-9.7-1.2c-0.3,0.1-0.6,0.3-0.8,0.5l-6.1,5.1c-0.5-0.5-1.2-0.9-1.9-1c-0.9-0.1-1.8,0.1-2.6,0.7l-2.3,1.7 c-1.5,1.2-1.8,3.3-0.7,4.9l8,10.6c0.6,0.7,1.4,1.2,2.3,1.3c0.2,0,0.3,0,0.5,0c0.7,0,1.5-0.2,2.1-0.7l2.3-1.7 c1.2-0.9,1.7-2.6,1.1-3.9l1.2-0.9c0.3-0.2,0.6-0.3,0.9-0.3l11.3-0.2c2,0,4-0.6,5.8-1.6l11.6-6.7c0.6-0.3,2.4-1.5,2.2-3.1 C52.9,32.8,52.1,32.1,50.7,31.7z M17.6,48.9l-2.3,1.7C15,50.9,14.6,51,14.3,51c-0.4-0.1-0.7-0.3-1-0.6l-8-10.6 c-0.5-0.6-0.4-1.6,0.3-2.1L7.9,36c0.3-0.2,0.6-0.3,0.9-0.3c0.1,0,0.1,0,0.2,0c0.4,0.1,0.7,0.2,0.9,0.5l5.6,7.4l2.5,3.2 C18.4,47.5,18.3,48.5,17.6,48.9z M49.8,35.1l-11.6,6.7c-1.5,0.8-3.1,1.3-4.8,1.3L22,43.3c-0.8,0-1.5,0.3-2.1,0.7l-1,0.8l-2.3-3 l-4.2-5.6l6.1-5.1c0.1-0.1,0.2-0.1,0.3-0.2c1-0.4,4.6-1.7,7.6,0.9c0.6,0.5,1.4,0.8,2.2,0.8h5.3c1.1,0,2.1,0.4,2.8,1.1 c0.2,0.3,0.5,0.7,0.5,1c0,0.2-0.3,0.8-1.9,1.5h-7.6c-0.6,0-1,0.4-1,1s0.4,1,1,1h8.1l0.2-0.1c1.5-0.7,2.4-1.4,2.9-2.2l7.1-2.2 c1.4-0.5,2.9-0.5,4.2-0.1c0.6,0.2,0.8,0.3,0.9,0.4C50.9,34.3,50.3,34.8,49.8,35.1z"/><path d="M9.1,38.1l-1.8,1.3c-0.4,0.3-0.5,1-0.2,1.4c0.2,0.3,0.5,0.4,0.8,0.4c0.2,0,0.4-0.1,0.6-0.2l1.8-1.3c0.4-0.3,0.5-1,0.2-1.4 C10.1,37.8,9.5,37.7,9.1,38.1z"/><path d="M27.2,14c1.7,1.4,4,1.7,5.9,1.7c1.1,0,2.2-0.1,2.9-0.3v6.2c-3.7,0.5-6.6,3.4-6.6,6.8v1h15.7v-1c0-3.6-3.2-6.5-7.2-6.8v-7.2 c1.4,0.6,3.6,1.3,5.8,1.3c1,0,2-0.1,2.9-0.5c4.2-1.7,5.6-7.6,5.7-7.9c0.1-0.4-0.1-0.8-0.4-1.1c-0.2-0.1-5.4-3.3-9.6-1.6 c-2.2,0.9-3.9,3-4.9,4.8C37,7.8,36.1,6,34.5,4.8c-3.7-3-9.8-1.3-10.1-1.2c-0.4,0.1-0.7,0.5-0.7,0.9C23.7,4.8,23.4,11.1,27.2,14z M43,27.5H31.5c0.6-2.2,2.9-3.9,5.7-3.9C40.1,23.6,42.5,25.3,43,27.5z M43.1,6.6c2.5-1,5.8,0.4,7.1,1.1c-0.5,1.5-1.8,4.7-4.3,5.8 c0,0,0,0,0,0c-2,0.8-4.5,0.2-6.3-0.5l7.2-2.8c0.4-0.2,0.6-0.5,0.6-0.9c0-0.1,0-0.2-0.1-0.4c-0.2-0.5-0.8-0.8-1.3-0.6l-7.2,2.8 C39.7,9.4,41.1,7.4,43.1,6.6z M33.3,6.3c1.8,1.4,2.4,4,2.6,5.8l-6.3-5c-0.4-0.3-1.1-0.3-1.4,0.2c-0.1,0.2-0.2,0.4-0.2,0.6 c0,0.3,0.1,0.6,0.4,0.8l6.3,5c-1.8,0.2-4.4,0.2-6.2-1.2c-2.3-1.8-2.6-5.5-2.7-7.1C27.3,5,31,4.5,33.3,6.3z"/></svg>
+      百变玉米
+    </div>
+    <span class="demo-tag">DEMO</span>
+  </div>
+
+  <div class="views">
+    <!-- 广场 -->
+    <section class="view active" id="v-plaza">
+      <div class="block-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.2 5.4a2 2 0 001.1 1.1L20.7 12l-5.4 2.2a2 2 0 00-1.1 1.1L12 20.7l-2.2-5.4a2 2 0 00-1.1-1.1L3.3 12l5.4-2.2a2 2 0 001.1-1.1L12 3z"/><path d="M19 3.5v3M17.5 5h3"/></svg>百变玉米</div>
+      <div class="corn-entries">
+        <div class="corn-entry" onclick="openCards()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="2.5" width="12" height="16" rx="2.5"/><rect x="3.5" y="5.5" width="12" height="16" rx="2.5" style="fill:var(--card)"/><path transform="translate(5.3 9.3) scale(0.35)" fill="currentColor" stroke="none" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.562.562 0 01.32-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
+          <span>我的卡牌</span>
+        </div>
+        <div class="corn-entry" onclick="openStore()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 016 0"/></svg>
+          <span>商店</span>
+        </div>
+      </div>
+
+      <div class="block-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 10l9-7 9 7"/><path d="M5 9v11h14V9"/></svg>农户故事</div>
+      <div class="vstack" id="stories"></div>
+
+      <div class="block-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a6 6 0 00-4 10c1 1 1 2 1 3h6c0-1 0-2 1-3a6 6 0 00-4-10z"/><path d="M9 18h6M10 21h4"/></svg>环保理念</div>
+      <div class="ez" id="eco"></div>
+
+      <div class="block-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18M8 5v14"/></svg>活动</div>
+      <div id="events"></div>
+
+      <div class="block-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg>农产品 & 文创</div>
+      <div class="prod-grid" id="products"></div>
+
+      <div class="block-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>小游戏</div>
+      <div class="game-lock">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+        <p>小游戏即将上线 · 敬请期待</p>
+      </div>
+
+      <div class="foot-note">demo数据均为示例</div>
+    </section>
+
+    <!-- 每日一题 -->
+    <section class="view" id="v-quiz">
+
+      <div id="quizWrap"></div>
+    </section>
+
+    <!-- 点子市集 -->
+    <section class="view" id="v-market">
+
+      <div class="block-title">身份视角</div>
+      <div class="persp" id="perspBar"></div>
+      <div id="ideaList"></div>
+
+      <div class="block-title">环保锦囊</div>
+      <div id="tips"></div>
+
+      <div class="foot-note">demo数据均为示例</div>
+    </section>
+
+    <!-- 我的 -->
+    <section class="view" id="v-me">
+
+      <div class="profile-head">
+        <div class="avatar"><img src="corn-base.png" alt="头像"/></div>
+        <div>
+          <div class="nm" id="meName">玉米小伙伴</div>
+          <div class="meta" id="meMeta">ID：— · 注册于 —</div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat"><div class="v" id="mePoints">0</div><div class="l">积分</div></div>
+        <div class="stat"><div class="v" id="meCards">1</div><div class="l">卡牌</div></div>
+        <div class="stat"><div class="v" id="meAns">0</div><div class="l">答题</div></div>
+      </div>
+      <div class="block-title">每日一题 · 答题记录</div>
+      <div class="rec" id="recList"></div>
+      <div class="block-title">我的卡牌</div>
+      <div class="own-card" onclick="openCardView()" role="button">
+        <div class="thumb">
+          <svg viewBox="0 0 54 72" role="img" aria-label="卡牌">
+            <defs>
+              <linearGradient id="cardBackG" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#2E7D32"/>
+                <stop offset="1" stop-color="#15471C"/>
+              </linearGradient>
+            </defs>
+            <rect width="54" height="72" fill="url(#cardBackG)"/>
+            <rect x="4.5" y="4.5" width="45" height="63" rx="4.5" fill="none" stroke="#F5F5DC" stroke-opacity=".42"/>
+            <rect x="7.5" y="7.5" width="39" height="57" rx="3" fill="none" stroke="#F5F5DC" stroke-opacity=".2"/>
+            <circle cx="27" cy="36" r="13.5" fill="none" stroke="#F5F5DC" stroke-opacity=".5"/>
+            <g transform="translate(27 36) scale(.385) translate(-27.95 -27.9)" fill="#F6F4E6"><path d="M50.7,31.7c-1.7-0.5-3.6-0.5-5.4,0.1l-6.2,2c-0.1-0.4-0.4-0.9-0.9-1.4c-1-1.1-2.6-1.8-4.2-1.8h-5.3c-0.3,0-0.7-0.1-0.9-0.3c-3.9-3.3-8.4-1.8-9.7-1.2c-0.3,0.1-0.6,0.3-0.8,0.5l-6.1,5.1c-0.5-0.5-1.2-0.9-1.9-1c-0.9-0.1-1.8,0.1-2.6,0.7l-2.3,1.7c-1.5,1.2-1.8,3.3-0.7,4.9l8,10.6c0.6,0.7,1.4,1.2,2.3,1.3c0.2,0,0.3,0,0.5,0c0.7,0,1.5-0.2,2.1-0.7l2.3-1.7c1.2-0.9,1.7-2.6,1.1-3.9l1.2-0.9c0.3-0.2,0.6-0.3,0.9-0.3l11.3-0.2c2,0,4-0.6,5.8-1.6l11.6-6.7c0.6-0.3,2.4-1.5,2.2-3.1C52.9,32.8,52.1,32.1,50.7,31.7z M17.6,48.9l-2.3,1.7C15,50.9,14.6,51,14.3,51c-0.4-0.1-0.7-0.3-1-0.6l-8-10.6c-0.5-0.6-0.4-1.6,0.3-2.1L7.9,36c0.3-0.2,0.6-0.3,0.9-0.3c0.1,0,0.1,0,0.2,0c0.4,0.1,0.7,0.2,0.9,0.5l5.6,7.4l2.5,3.2C18.4,47.5,18.3,48.5,17.6,48.9z M49.8,35.1l-11.6,6.7c-1.5,0.8-3.1,1.3-4.8,1.3L22,43.3c-0.8,0-1.5,0.3-2.1,0.7l-1,0.8l-2.3-3l-4.2-5.6l6.1-5.1c0.1-0.1,0.2-0.1,0.3-0.2c1-0.4,4.6-1.7,7.6,0.9c0.6,0.5,1.4,0.8,2.2,0.8h5.3c1.1,0,2.1,0.4,2.8,1.1c0.2,0.3,0.5,0.7,0.5,1c0,0.2-0.3,0.8-1.9,1.5h-7.6c-0.6,0-1,0.4-1,1s0.4,1,1,1h8.1l0.2-0.1c1.5-0.7,2.4-1.4,2.9-2.2l7.1-2.2c1.4-0.5,2.9-0.5,4.2-0.1c0.6,0.2,0.8,0.3,0.9,0.4C50.9,34.3,50.3,34.8,49.8,35.1z"/><path d="M9.1,38.1l-1.8,1.3c-0.4,0.3-0.5,1-0.2,1.4c0.2,0.3,0.5,0.4,0.8,0.4c0.2,0,0.4-0.1,0.6-0.2l1.8-1.3c0.4-0.3,0.5-1,0.2-1.4C10.1,37.8,9.5,37.7,9.1,38.1z"/><path d="M27.2,14c1.7,1.4,4,1.7,5.9,1.7c1.1,0,2.2-0.1,2.9-0.3v6.2c-3.7,0.5-6.6,3.4-6.6,6.8v1h15.7v-1c0-3.6-3.2-6.5-7.2-6.8v-7.2c1.4,0.6,3.6,1.3,5.8,1.3c1,0,2-0.1,2.9-0.5c4.2-1.7,5.6-7.6,5.7-7.9c0.1-0.4-0.1-0.8-0.4-1.1c-0.2-0.1-5.4-3.3-9.6-1.6c-2.2,0.9-3.9,3-4.9,4.8C37,7.8,36.1,6,34.5,4.8c-3.7-3-9.8-1.3-10.1-1.2c-0.4,0.1-0.7,0.5-0.7,0.9C23.7,4.8,23.4,11.1,27.2,14z M43,27.5H31.5c0.6-2.2,2.9-3.9,5.7-3.9C40.1,23.6,42.5,25.3,43,27.5z M43.1,6.6c2.5-1,5.8,0.4,7.1,1.1c-0.5,1.5-1.8,4.7-4.3,5.8c0,0,0,0,0,0c-2,0.8-4.5,0.2-6.3-0.5l7.2-2.8c0.4-0.2,0.6-0.5,0.6-0.9c0-0.1,0-0.2-0.1-0.4c-0.2-0.5-0.8-0.8-1.3-0.6l-7.2,2.8C39.7,9.4,41.1,7.4,43.1,6.6z M33.3,6.3c1.8,1.4,2.4,4,2.6,5.8l-6.3-5c-0.4-0.3-1.1-0.3-1.4,0.2c-0.1,0.2-0.2,0.4-0.2,0.6c0,0.3,0.1,0.6,0.4,0.8l6.3,5c-1.8,0.2-4.4,0.2-6.2-1.2c-2.3-1.8-2.6-5.5-2.7-7.1C27.3,5,31,4.5,33.3,6.3z"/></g>
+            <path d="M27 11.4L28.5 13L27 14.6L25.5 13Z" fill="#F5F5DC" fill-opacity=".55"/>
+            <path d="M27 57.4L28.5 59L27 60.6L25.5 59Z" fill="#F5F5DC" fill-opacity=".55"/>
+          </svg>
+        </div>
+        <div class="info"><h4>萌芽玉米</h4><p>百变玉米的起点</p></div>
+        <span class="view-hint">查看 ›</span>
+      </div>
+      <div class="fan">
+        <div class="qr" id="fanQr"></div>
+        <p>扫码加入粉丝群（示例二维码）</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- 底部导航 -->
+  <div class="tabbar">
+    <button class="tab on" data-v="v-plaza" onclick="switchTab(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-7 9 7"/><path d="M5 9v11h14V9"/></svg>广场
+    </button>
+    <button class="tab" data-v="v-quiz" onclick="switchTab(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 0c0 1.5-2.5 2-2.5 4"/><path d="M12 17h.01"/></svg>每日一题
+    </button>
+    <button class="tab" data-v="v-market" onclick="switchTab(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 00-4 10c1 1 1 2 1 3h6c0-1 0-2 1-3a6 6 0 00-4-10z"/><path d="M9 18h6M10 21h4"/></svg>点子市集
+    </button>
+    <button class="tab" data-v="v-me" onclick="switchTab(this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>我的
+    </button>
+  </div>
+
+  <!-- 卡牌册弹层 -->
+  <div class="mask" id="cardMask" onclick="if(event.target===this)closeCards()">
+    <div class="sheet">
+      <div style="text-align:right"><span class="x" onclick="closeCards()">×</span></div>
+      <div class="bigcard">
+        <svg viewBox="0 0 300 400" role="img" aria-label="萌芽玉米 卡牌 No.001">
+          <rect width="300" height="400" fill="#F8EBCB"/>
+          <circle cx="218" cy="86" r="44" fill="#F3CE85"/>
+          <path d="M0 228 C50 206 96 220 150 210 C206 200 250 216 300 204 L300 400 L0 400 Z" fill="#DCE6BC"/>
+          <path d="M0 262 C56 254 108 268 158 260 C208 254 258 266 300 258 L300 400 L0 400 Z" fill="#C6D4A2"/>
+          <image href="corn-base.png" x="13.9" y="78.1" width="273.4" height="273.4"/>
+          <path d="M0 292 C60 284 110 300 160 292 C210 284 260 296 300 288 L300 400 L0 400 Z" fill="#6B4A2F"/>
+          <path d="M0 292 C60 284 110 300 160 292 C210 284 260 296 300 288" fill="none" stroke="#8B6A45" stroke-width="2"/>
+          <ellipse cx="150" cy="294" rx="46" ry="6" fill="#4E3522" opacity=".28"/>
+          <rect x="16" y="316" width="268" height="74" rx="10" fill="#FFFFFF" opacity=".94"/>
+          <rect x="16" y="16" width="62" height="21" rx="10.5" fill="#FFFFFF" opacity=".85"/>
+          <text x="47" y="30.5" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="9" font-weight="700" letter-spacing="1.4" fill="#7C6A4A">No.001</text>
+          <text x="150" y="342" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="18" font-weight="700" letter-spacing="1.5" fill="#22301C">萌芽玉米</text>
+          <text x="150" y="363" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#4C6B3A">百变玉米的起点</text>
+          <text x="150" y="379" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="8" letter-spacing=".6" fill="#8A8A76">获得方式：新用户注册</text>
+        </svg>
+      </div>
+      <p style="text-align:center;font-size:11.5px;color:var(--muted);margin:14px 0 0">更多卡牌即将上线</p>
+    </div>
+  </div>
+
+  <!-- 我的卡牌 · 大图查看 -->
+  <div class="mask" id="cardViewMask" onclick="if(event.target===this)closeCardView()">
+    <div class="sheet">
+      <div style="text-align:right"><span class="x" onclick="closeCardView()">×</span></div>
+      <div class="bigcard">
+        <svg viewBox="0 0 300 400" role="img" aria-label="萌芽玉米 卡牌 No.001">
+          <rect width="300" height="400" fill="#F8EBCB"/>
+          <circle cx="218" cy="86" r="44" fill="#F3CE85"/>
+          <path d="M0 228 C50 206 96 220 150 210 C206 200 250 216 300 204 L300 400 L0 400 Z" fill="#DCE6BC"/>
+          <path d="M0 262 C56 254 108 268 158 260 C208 254 258 266 300 258 L300 400 L0 400 Z" fill="#C6D4A2"/>
+          <image href="corn-base.png" x="13.9" y="78.1" width="273.4" height="273.4"/>
+          <path d="M0 292 C60 284 110 300 160 292 C210 284 260 296 300 288 L300 400 L0 400 Z" fill="#6B4A2F"/>
+          <path d="M0 292 C60 284 110 300 160 292 C210 284 260 296 300 288" fill="none" stroke="#8B6A45" stroke-width="2"/>
+          <ellipse cx="150" cy="294" rx="46" ry="6" fill="#4E3522" opacity=".28"/>
+          <rect x="16" y="316" width="268" height="74" rx="10" fill="#FFFFFF" opacity=".94"/>
+          <rect x="16" y="16" width="62" height="21" rx="10.5" fill="#FFFFFF" opacity=".85"/>
+          <text x="47" y="30.5" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="9" font-weight="700" letter-spacing="1.4" fill="#7C6A4A">No.001</text>
+          <text x="150" y="342" text-anchor="middle" font-family="'Noto Serif SC',serif" font-size="18" font-weight="700" letter-spacing="1.5" fill="#22301C">萌芽玉米</text>
+          <text x="150" y="363" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="10" fill="#4C6B3A">百变玉米的起点</text>
+          <text x="150" y="379" text-anchor="middle" font-family="'Noto Sans SC',sans-serif" font-size="8" letter-spacing=".6" fill="#8A8A76">获得方式：新用户注册</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+    <!-- 商店占位弹层 -->
+  <div class="mask" id="storeMask" onclick="if(event.target===this)closeStore()">
+    <div class="sheet" style="text-align:center">
+      <div style="text-align:right"><span class="x" onclick="closeStore()">×</span></div>
+      <h3 style="justify-content:center">商店 <span class="x" style="display:none" onclick="closeStore()">×</span></h3>
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--forest)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="width:46px;height:46px;margin:6px auto 10px"><path d="M6 7h12l-1 13H7z"/><path d="M9 7a3 3 0 016 0"/></svg>
+      <p style="color:var(--muted);font-size:13px;margin:4px 0">商店即将上线</p>
+    </div>
+  </div>
+
+  <!-- 答题详情弹层 -->
+  <div class="mask" id="recMask" onclick="if(event.target===this)closeRec()">
+    <div class="sheet">
+      <div style="text-align:right"><span class="x" onclick="closeRec()">×</span></div>
+      <h3 style="justify-content:center">答题详情</h3>
+      <div id="recBody"></div>
+    </div>
+  </div>
+
+  <!-- 模拟购买弹层 -->
+  <div class="mask" id="buyMask" onclick="if(event.target===this)closeBuy()">
+    <div class="sheet">
+      <h3 id="buyTitle">购买 <span class="x" onclick="closeBuy()">×</span></h3>
+      <div id="buyBody"></div>
+    </div>
+  </div>
+
+  <!-- 分享卡弹层 -->
+  <div class="mask" id="shareMask" onclick="if(event.target===this)closeShare()">
+    <div class="sheet">
+      <div style="text-align:right;margin-bottom:-6px"><span class="x" onclick="closeShare()">×</span></div>
+      <canvas id="shareCv" class="share-canvas" width="720" height="1080"></canvas>
+      <button class="btn block" style="margin-top:14px" onclick="downloadShare()">保存图片</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+//---------------------------------------------------------------------
+//
+// QR Code Generator for JavaScript
+//
+// Copyright (c) 2009 Kazuhiko Arase
+//
+// URL: http://www.d-project.com/
+//
+// Licensed under the MIT license:
+//  http://www.opensource.org/licenses/mit-license.php
+//
+// The word 'QR Code' is registered trademark of
+// DENSO WAVE INCORPORATED
+//  http://www.denso-wave.com/qrcode/faqpatent-e.html
+//
+//---------------------------------------------------------------------
+
+var qrcode = function() {
+
+  //---------------------------------------------------------------------
+  // qrcode
+  //---------------------------------------------------------------------
+
+  /**
+   * qrcode
+   * @param typeNumber 1 to 40
+   * @param errorCorrectionLevel 'L','M','Q','H'
+   */
+  var qrcode = function(typeNumber, errorCorrectionLevel) {
+
+    var PAD0 = 0xEC;
+    var PAD1 = 0x11;
+
+    var _typeNumber = typeNumber;
+    var _errorCorrectionLevel = QRErrorCorrectionLevel[errorCorrectionLevel];
+    var _modules = null;
+    var _moduleCount = 0;
+    var _dataCache = null;
+    var _dataList = [];
+
+    var _this = {};
+
+    var makeImpl = function(test, maskPattern) {
+
+      _moduleCount = _typeNumber * 4 + 17;
+      _modules = function(moduleCount) {
+        var modules = new Array(moduleCount);
+        for (var row = 0; row < moduleCount; row += 1) {
+          modules[row] = new Array(moduleCount);
+          for (var col = 0; col < moduleCount; col += 1) {
+            modules[row][col] = null;
+          }
+        }
+        return modules;
+      }(_moduleCount);
+
+      setupPositionProbePattern(0, 0);
+      setupPositionProbePattern(_moduleCount - 7, 0);
+      setupPositionProbePattern(0, _moduleCount - 7);
+      setupPositionAdjustPattern();
+      setupTimingPattern();
+      setupTypeInfo(test, maskPattern);
+
+      if (_typeNumber >= 7) {
+        setupTypeNumber(test);
+      }
+
+      if (_dataCache == null) {
+        _dataCache = createData(_typeNumber, _errorCorrectionLevel, _dataList);
+      }
+
+      mapData(_dataCache, maskPattern);
+    };
+
+    var setupPositionProbePattern = function(row, col) {
+
+      for (var r = -1; r <= 7; r += 1) {
+
+        if (row + r <= -1 || _moduleCount <= row + r) continue;
+
+        for (var c = -1; c <= 7; c += 1) {
+
+          if (col + c <= -1 || _moduleCount <= col + c) continue;
+
+          if ( (0 <= r && r <= 6 && (c == 0 || c == 6) )
+              || (0 <= c && c <= 6 && (r == 0 || r == 6) )
+              || (2 <= r && r <= 4 && 2 <= c && c <= 4) ) {
+            _modules[row + r][col + c] = true;
+          } else {
+            _modules[row + r][col + c] = false;
+          }
+        }
+      }
+    };
+
+    var getBestMaskPattern = function() {
+
+      var minLostPoint = 0;
+      var pattern = 0;
+
+      for (var i = 0; i < 8; i += 1) {
+
+        makeImpl(true, i);
+
+        var lostPoint = QRUtil.getLostPoint(_this);
+
+        if (i == 0 || minLostPoint > lostPoint) {
+          minLostPoint = lostPoint;
+          pattern = i;
+        }
+      }
+
+      return pattern;
+    };
+
+    var setupTimingPattern = function() {
+
+      for (var r = 8; r < _moduleCount - 8; r += 1) {
+        if (_modules[r][6] != null) {
+          continue;
+        }
+        _modules[r][6] = (r % 2 == 0);
+      }
+
+      for (var c = 8; c < _moduleCount - 8; c += 1) {
+        if (_modules[6][c] != null) {
+          continue;
+        }
+        _modules[6][c] = (c % 2 == 0);
+      }
+    };
+
+    var setupPositionAdjustPattern = function() {
+
+      var pos = QRUtil.getPatternPosition(_typeNumber);
+
+      for (var i = 0; i < pos.length; i += 1) {
+
+        for (var j = 0; j < pos.length; j += 1) {
+
+          var row = pos[i];
+          var col = pos[j];
+
+          if (_modules[row][col] != null) {
+            continue;
+          }
+
+          for (var r = -2; r <= 2; r += 1) {
+
+            for (var c = -2; c <= 2; c += 1) {
+
+              if (r == -2 || r == 2 || c == -2 || c == 2
+                  || (r == 0 && c == 0) ) {
+                _modules[row + r][col + c] = true;
+              } else {
+                _modules[row + r][col + c] = false;
+              }
+            }
+          }
+        }
+      }
+    };
+
+    var setupTypeNumber = function(test) {
+
+      var bits = QRUtil.getBCHTypeNumber(_typeNumber);
+
+      for (var i = 0; i < 18; i += 1) {
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+        _modules[Math.floor(i / 3)][i % 3 + _moduleCount - 8 - 3] = mod;
+      }
+
+      for (var i = 0; i < 18; i += 1) {
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+        _modules[i % 3 + _moduleCount - 8 - 3][Math.floor(i / 3)] = mod;
+      }
+    };
+
+    var setupTypeInfo = function(test, maskPattern) {
+
+      var data = (_errorCorrectionLevel << 3) | maskPattern;
+      var bits = QRUtil.getBCHTypeInfo(data);
+
+      // vertical
+      for (var i = 0; i < 15; i += 1) {
+
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+
+        if (i < 6) {
+          _modules[i][8] = mod;
+        } else if (i < 8) {
+          _modules[i + 1][8] = mod;
+        } else {
+          _modules[_moduleCount - 15 + i][8] = mod;
+        }
+      }
+
+      // horizontal
+      for (var i = 0; i < 15; i += 1) {
+
+        var mod = (!test && ( (bits >> i) & 1) == 1);
+
+        if (i < 8) {
+          _modules[8][_moduleCount - i - 1] = mod;
+        } else if (i < 9) {
+          _modules[8][15 - i - 1 + 1] = mod;
+        } else {
+          _modules[8][15 - i - 1] = mod;
+        }
+      }
+
+      // fixed module
+      _modules[_moduleCount - 8][8] = (!test);
+    };
+
+    var mapData = function(data, maskPattern) {
+
+      var inc = -1;
+      var row = _moduleCount - 1;
+      var bitIndex = 7;
+      var byteIndex = 0;
+      var maskFunc = QRUtil.getMaskFunction(maskPattern);
+
+      for (var col = _moduleCount - 1; col > 0; col -= 2) {
+
+        if (col == 6) col -= 1;
+
+        while (true) {
+
+          for (var c = 0; c < 2; c += 1) {
+
+            if (_modules[row][col - c] == null) {
+
+              var dark = false;
+
+              if (byteIndex < data.length) {
+                dark = ( ( (data[byteIndex] >>> bitIndex) & 1) == 1);
+              }
+
+              var mask = maskFunc(row, col - c);
+
+              if (mask) {
+                dark = !dark;
+              }
+
+              _modules[row][col - c] = dark;
+              bitIndex -= 1;
+
+              if (bitIndex == -1) {
+                byteIndex += 1;
+                bitIndex = 7;
+              }
+            }
+          }
+
+          row += inc;
+
+          if (row < 0 || _moduleCount <= row) {
+            row -= inc;
+            inc = -inc;
+            break;
+          }
+        }
+      }
+    };
+
+    var createBytes = function(buffer, rsBlocks) {
+
+      var offset = 0;
+
+      var maxDcCount = 0;
+      var maxEcCount = 0;
+
+      var dcdata = new Array(rsBlocks.length);
+      var ecdata = new Array(rsBlocks.length);
+
+      for (var r = 0; r < rsBlocks.length; r += 1) {
+
+        var dcCount = rsBlocks[r].dataCount;
+        var ecCount = rsBlocks[r].totalCount - dcCount;
+
+        maxDcCount = Math.max(maxDcCount, dcCount);
+        maxEcCount = Math.max(maxEcCount, ecCount);
+
+        dcdata[r] = new Array(dcCount);
+
+        for (var i = 0; i < dcdata[r].length; i += 1) {
+          dcdata[r][i] = 0xff & buffer.getBuffer()[i + offset];
+        }
+        offset += dcCount;
+
+        var rsPoly = QRUtil.getErrorCorrectPolynomial(ecCount);
+        var rawPoly = qrPolynomial(dcdata[r], rsPoly.getLength() - 1);
+
+        var modPoly = rawPoly.mod(rsPoly);
+        ecdata[r] = new Array(rsPoly.getLength() - 1);
+        for (var i = 0; i < ecdata[r].length; i += 1) {
+          var modIndex = i + modPoly.getLength() - ecdata[r].length;
+          ecdata[r][i] = (modIndex >= 0)? modPoly.getAt(modIndex) : 0;
+        }
+      }
+
+      var totalCodeCount = 0;
+      for (var i = 0; i < rsBlocks.length; i += 1) {
+        totalCodeCount += rsBlocks[i].totalCount;
+      }
+
+      var data = new Array(totalCodeCount);
+      var index = 0;
+
+      for (var i = 0; i < maxDcCount; i += 1) {
+        for (var r = 0; r < rsBlocks.length; r += 1) {
+          if (i < dcdata[r].length) {
+            data[index] = dcdata[r][i];
+            index += 1;
+          }
+        }
+      }
+
+      for (var i = 0; i < maxEcCount; i += 1) {
+        for (var r = 0; r < rsBlocks.length; r += 1) {
+          if (i < ecdata[r].length) {
+            data[index] = ecdata[r][i];
+            index += 1;
+          }
+        }
+      }
+
+      return data;
+    };
+
+    var createData = function(typeNumber, errorCorrectionLevel, dataList) {
+
+      var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, errorCorrectionLevel);
+
+      var buffer = qrBitBuffer();
+
+      for (var i = 0; i < dataList.length; i += 1) {
+        var data = dataList[i];
+        buffer.put(data.getMode(), 4);
+        buffer.put(data.getLength(), QRUtil.getLengthInBits(data.getMode(), typeNumber) );
+        data.write(buffer);
+      }
+
+      // calc num max data.
+      var totalDataCount = 0;
+      for (var i = 0; i < rsBlocks.length; i += 1) {
+        totalDataCount += rsBlocks[i].dataCount;
+      }
+
+      if (buffer.getLengthInBits() > totalDataCount * 8) {
+        throw 'code length overflow. ('
+          + buffer.getLengthInBits()
+          + '>'
+          + totalDataCount * 8
+          + ')';
+      }
+
+      // end code
+      if (buffer.getLengthInBits() + 4 <= totalDataCount * 8) {
+        buffer.put(0, 4);
+      }
+
+      // padding
+      while (buffer.getLengthInBits() % 8 != 0) {
+        buffer.putBit(false);
+      }
+
+      // padding
+      while (true) {
+
+        if (buffer.getLengthInBits() >= totalDataCount * 8) {
+          break;
+        }
+        buffer.put(PAD0, 8);
+
+        if (buffer.getLengthInBits() >= totalDataCount * 8) {
+          break;
+        }
+        buffer.put(PAD1, 8);
+      }
+
+      return createBytes(buffer, rsBlocks);
+    };
+
+    _this.addData = function(data, mode) {
+
+      mode = mode || 'Byte';
+
+      var newData = null;
+
+      switch(mode) {
+      case 'Numeric' :
+        newData = qrNumber(data);
+        break;
+      case 'Alphanumeric' :
+        newData = qrAlphaNum(data);
+        break;
+      case 'Byte' :
+        newData = qr8BitByte(data);
+        break;
+      case 'Kanji' :
+        newData = qrKanji(data);
+        break;
+      default :
+        throw 'mode:' + mode;
+      }
+
+      _dataList.push(newData);
+      _dataCache = null;
+    };
+
+    _this.isDark = function(row, col) {
+      if (row < 0 || _moduleCount <= row || col < 0 || _moduleCount <= col) {
+        throw row + ',' + col;
+      }
+      return _modules[row][col];
+    };
+
+    _this.getModuleCount = function() {
+      return _moduleCount;
+    };
+
+    _this.make = function() {
+      if (_typeNumber < 1) {
+        var typeNumber = 1;
+
+        for (; typeNumber < 40; typeNumber++) {
+          var rsBlocks = QRRSBlock.getRSBlocks(typeNumber, _errorCorrectionLevel);
+          var buffer = qrBitBuffer();
+
+          for (var i = 0; i < _dataList.length; i++) {
+            var data = _dataList[i];
+            buffer.put(data.getMode(), 4);
+            buffer.put(data.getLength(), QRUtil.getLengthInBits(data.getMode(), typeNumber) );
+            data.write(buffer);
+          }
+
+          var totalDataCount = 0;
+          for (var i = 0; i < rsBlocks.length; i++) {
+            totalDataCount += rsBlocks[i].dataCount;
+          }
+
+          if (buffer.getLengthInBits() <= totalDataCount * 8) {
+            break;
+          }
+        }
+
+        _typeNumber = typeNumber;
+      }
+
+      makeImpl(false, getBestMaskPattern() );
+    };
+
+    _this.createTableTag = function(cellSize, margin) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var qrHtml = '';
+
+      qrHtml += '<table style="';
+      qrHtml += ' border-width: 0px; border-style: none;';
+      qrHtml += ' border-collapse: collapse;';
+      qrHtml += ' padding: 0px; margin: ' + margin + 'px;';
+      qrHtml += '">';
+      qrHtml += '<tbody>';
+
+      for (var r = 0; r < _this.getModuleCount(); r += 1) {
+
+        qrHtml += '<tr>';
+
+        for (var c = 0; c < _this.getModuleCount(); c += 1) {
+          qrHtml += '<td style="';
+          qrHtml += ' border-width: 0px; border-style: none;';
+          qrHtml += ' border-collapse: collapse;';
+          qrHtml += ' padding: 0px; margin: 0px;';
+          qrHtml += ' width: ' + cellSize + 'px;';
+          qrHtml += ' height: ' + cellSize + 'px;';
+          qrHtml += ' background-color: ';
+          qrHtml += _this.isDark(r, c)? '#000000' : '#ffffff';
+          qrHtml += ';';
+          qrHtml += '"/>';
+        }
+
+        qrHtml += '</tr>';
+      }
+
+      qrHtml += '</tbody>';
+      qrHtml += '</table>';
+
+      return qrHtml;
+    };
+
+    _this.createSvgTag = function(cellSize, margin, alt, title) {
+
+      var opts = {};
+      if (typeof arguments[0] == 'object') {
+        // Called by options.
+        opts = arguments[0];
+        // overwrite cellSize and margin.
+        cellSize = opts.cellSize;
+        margin = opts.margin;
+        alt = opts.alt;
+        title = opts.title;
+      }
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      // Compose alt property surrogate
+      alt = (typeof alt === 'string') ? {text: alt} : alt || {};
+      alt.text = alt.text || null;
+      alt.id = (alt.text) ? alt.id || 'qrcode-description' : null;
+
+      // Compose title property surrogate
+      title = (typeof title === 'string') ? {text: title} : title || {};
+      title.text = title.text || null;
+      title.id = (title.text) ? title.id || 'qrcode-title' : null;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var c, mc, r, mr, qrSvg='', rect;
+
+      rect = 'l' + cellSize + ',0 0,' + cellSize +
+        ' -' + cellSize + ',0 0,-' + cellSize + 'z ';
+
+      qrSvg += '<svg version="1.1" xmlns="http://www.w3.org/2000/svg"';
+      qrSvg += !opts.scalable ? ' width="' + size + 'px" height="' + size + 'px"' : '';
+      qrSvg += ' viewBox="0 0 ' + size + ' ' + size + '" ';
+      qrSvg += ' preserveAspectRatio="xMinYMin meet"';
+      qrSvg += (title.text || alt.text) ? ' role="img" aria-labelledby="' +
+          escapeXml([title.id, alt.id].join(' ').trim() ) + '"' : '';
+      qrSvg += '>';
+      qrSvg += (title.text) ? '<title id="' + escapeXml(title.id) + '">' +
+          escapeXml(title.text) + '</title>' : '';
+      qrSvg += (alt.text) ? '<description id="' + escapeXml(alt.id) + '">' +
+          escapeXml(alt.text) + '</description>' : '';
+      qrSvg += '<rect width="100%" height="100%" fill="white" cx="0" cy="0"/>';
+      qrSvg += '<path d="';
+
+      for (r = 0; r < _this.getModuleCount(); r += 1) {
+        mr = r * cellSize + margin;
+        for (c = 0; c < _this.getModuleCount(); c += 1) {
+          if (_this.isDark(r, c) ) {
+            mc = c*cellSize+margin;
+            qrSvg += 'M' + mc + ',' + mr + rect;
+          }
+        }
+      }
+
+      qrSvg += '" stroke="transparent" fill="black"/>';
+      qrSvg += '</svg>';
+
+      return qrSvg;
+    };
+
+    _this.createDataURL = function(cellSize, margin) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      return createDataURL(size, size, function(x, y) {
+        if (min <= x && x < max && min <= y && y < max) {
+          var c = Math.floor( (x - min) / cellSize);
+          var r = Math.floor( (y - min) / cellSize);
+          return _this.isDark(r, c)? 0 : 1;
+        } else {
+          return 1;
+        }
+      } );
+    };
+
+    _this.createImgTag = function(cellSize, margin, alt) {
+
+      cellSize = cellSize || 2;
+      margin = (typeof margin == 'undefined')? cellSize * 4 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+
+      var img = '';
+      img += '<img';
+      img += '\u0020src="';
+      img += _this.createDataURL(cellSize, margin);
+      img += '"';
+      img += '\u0020width="';
+      img += size;
+      img += '"';
+      img += '\u0020height="';
+      img += size;
+      img += '"';
+      if (alt) {
+        img += '\u0020alt="';
+        img += escapeXml(alt);
+        img += '"';
+      }
+      img += '/>';
+
+      return img;
+    };
+
+    var escapeXml = function(s) {
+      var escaped = '';
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charAt(i);
+        switch(c) {
+        case '<': escaped += '&lt;'; break;
+        case '>': escaped += '&gt;'; break;
+        case '&': escaped += '&amp;'; break;
+        case '"': escaped += '&quot;'; break;
+        default : escaped += c; break;
+        }
+      }
+      return escaped;
+    };
+
+    var _createHalfASCII = function(margin) {
+      var cellSize = 1;
+      margin = (typeof margin == 'undefined')? cellSize * 2 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      var y, x, r1, r2, p;
+
+      var blocks = {
+        '██': '█',
+        '█ ': '▀',
+        ' █': '▄',
+        '  ': ' '
+      };
+
+      var blocksLastLineNoMargin = {
+        '██': '▀',
+        '█ ': '▀',
+        ' █': ' ',
+        '  ': ' '
+      };
+
+      var ascii = '';
+      for (y = 0; y < size; y += 2) {
+        r1 = Math.floor((y - min) / cellSize);
+        r2 = Math.floor((y + 1 - min) / cellSize);
+        for (x = 0; x < size; x += 1) {
+          p = '█';
+
+          if (min <= x && x < max && min <= y && y < max && _this.isDark(r1, Math.floor((x - min) / cellSize))) {
+            p = ' ';
+          }
+
+          if (min <= x && x < max && min <= y+1 && y+1 < max && _this.isDark(r2, Math.floor((x - min) / cellSize))) {
+            p += ' ';
+          }
+          else {
+            p += '█';
+          }
+
+          // Output 2 characters per pixel, to create full square. 1 character per pixels gives only half width of square.
+          ascii += (margin < 1 && y+1 >= max) ? blocksLastLineNoMargin[p] : blocks[p];
+        }
+
+        ascii += '\n';
+      }
+
+      if (size % 2 && margin > 0) {
+        return ascii.substring(0, ascii.length - size - 1) + Array(size+1).join('▀');
+      }
+
+      return ascii.substring(0, ascii.length-1);
+    };
+
+    _this.createASCII = function(cellSize, margin) {
+      cellSize = cellSize || 1;
+
+      if (cellSize < 2) {
+        return _createHalfASCII(margin);
+      }
+
+      cellSize -= 1;
+      margin = (typeof margin == 'undefined')? cellSize * 2 : margin;
+
+      var size = _this.getModuleCount() * cellSize + margin * 2;
+      var min = margin;
+      var max = size - margin;
+
+      var y, x, r, p;
+
+      var white = Array(cellSize+1).join('██');
+      var black = Array(cellSize+1).join('  ');
+
+      var ascii = '';
+      var line = '';
+      for (y = 0; y < size; y += 1) {
+        r = Math.floor( (y - min) / cellSize);
+        line = '';
+        for (x = 0; x < size; x += 1) {
+          p = 1;
+
+          if (min <= x && x < max && min <= y && y < max && _this.isDark(r, Math.floor((x - min) / cellSize))) {
+            p = 0;
+          }
+
+          // Output 2 characters per pixel, to create full square. 1 character per pixels gives only half width of square.
+          line += p ? white : black;
+        }
+
+        for (r = 0; r < cellSize; r += 1) {
+          ascii += line + '\n';
+        }
+      }
+
+      return ascii.substring(0, ascii.length-1);
+    };
+
+    _this.renderTo2dContext = function(context, cellSize) {
+      cellSize = cellSize || 2;
+      var length = _this.getModuleCount();
+      for (var row = 0; row < length; row++) {
+        for (var col = 0; col < length; col++) {
+          context.fillStyle = _this.isDark(row, col) ? 'black' : 'white';
+          context.fillRect(row * cellSize, col * cellSize, cellSize, cellSize);
+        }
+      }
+    }
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrcode.stringToBytes
+  //---------------------------------------------------------------------
+
+  qrcode.stringToBytesFuncs = {
+    'default' : function(s) {
+      var bytes = [];
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charCodeAt(i);
+        bytes.push(c & 0xff);
+      }
+      return bytes;
+    }
+  };
+
+  qrcode.stringToBytes = qrcode.stringToBytesFuncs['default'];
+
+  //---------------------------------------------------------------------
+  // qrcode.createStringToBytes
+  //---------------------------------------------------------------------
+
+  /**
+   * @param unicodeData base64 string of byte array.
+   * [16bit Unicode],[16bit Bytes], ...
+   * @param numChars
+   */
+  qrcode.createStringToBytes = function(unicodeData, numChars) {
+
+    // create conversion map.
+
+    var unicodeMap = function() {
+
+      var bin = base64DecodeInputStream(unicodeData);
+      var read = function() {
+        var b = bin.read();
+        if (b == -1) throw 'eof';
+        return b;
+      };
+
+      var count = 0;
+      var unicodeMap = {};
+      while (true) {
+        var b0 = bin.read();
+        if (b0 == -1) break;
+        var b1 = read();
+        var b2 = read();
+        var b3 = read();
+        var k = String.fromCharCode( (b0 << 8) | b1);
+        var v = (b2 << 8) | b3;
+        unicodeMap[k] = v;
+        count += 1;
+      }
+      if (count != numChars) {
+        throw count + ' != ' + numChars;
+      }
+
+      return unicodeMap;
+    }();
+
+    var unknownChar = '?'.charCodeAt(0);
+
+    return function(s) {
+      var bytes = [];
+      for (var i = 0; i < s.length; i += 1) {
+        var c = s.charCodeAt(i);
+        if (c < 128) {
+          bytes.push(c);
+        } else {
+          var b = unicodeMap[s.charAt(i)];
+          if (typeof b == 'number') {
+            if ( (b & 0xff) == b) {
+              // 1byte
+              bytes.push(b);
+            } else {
+              // 2bytes
+              bytes.push(b >>> 8);
+              bytes.push(b & 0xff);
+            }
+          } else {
+            bytes.push(unknownChar);
+          }
+        }
+      }
+      return bytes;
+    };
+  };
+
+  //---------------------------------------------------------------------
+  // QRMode
+  //---------------------------------------------------------------------
+
+  var QRMode = {
+    MODE_NUMBER :    1 << 0,
+    MODE_ALPHA_NUM : 1 << 1,
+    MODE_8BIT_BYTE : 1 << 2,
+    MODE_KANJI :     1 << 3
+  };
+
+  //---------------------------------------------------------------------
+  // QRErrorCorrectionLevel
+  //---------------------------------------------------------------------
+
+  var QRErrorCorrectionLevel = {
+    L : 1,
+    M : 0,
+    Q : 3,
+    H : 2
+  };
+
+  //---------------------------------------------------------------------
+  // QRMaskPattern
+  //---------------------------------------------------------------------
+
+  var QRMaskPattern = {
+    PATTERN000 : 0,
+    PATTERN001 : 1,
+    PATTERN010 : 2,
+    PATTERN011 : 3,
+    PATTERN100 : 4,
+    PATTERN101 : 5,
+    PATTERN110 : 6,
+    PATTERN111 : 7
+  };
+
+  //---------------------------------------------------------------------
+  // QRUtil
+  //---------------------------------------------------------------------
+
+  var QRUtil = function() {
+
+    var PATTERN_POSITION_TABLE = [
+      [],
+      [6, 18],
+      [6, 22],
+      [6, 26],
+      [6, 30],
+      [6, 34],
+      [6, 22, 38],
+      [6, 24, 42],
+      [6, 26, 46],
+      [6, 28, 50],
+      [6, 30, 54],
+      [6, 32, 58],
+      [6, 34, 62],
+      [6, 26, 46, 66],
+      [6, 26, 48, 70],
+      [6, 26, 50, 74],
+      [6, 30, 54, 78],
+      [6, 30, 56, 82],
+      [6, 30, 58, 86],
+      [6, 34, 62, 90],
+      [6, 28, 50, 72, 94],
+      [6, 26, 50, 74, 98],
+      [6, 30, 54, 78, 102],
+      [6, 28, 54, 80, 106],
+      [6, 32, 58, 84, 110],
+      [6, 30, 58, 86, 114],
+      [6, 34, 62, 90, 118],
+      [6, 26, 50, 74, 98, 122],
+      [6, 30, 54, 78, 102, 126],
+      [6, 26, 52, 78, 104, 130],
+      [6, 30, 56, 82, 108, 134],
+      [6, 34, 60, 86, 112, 138],
+      [6, 30, 58, 86, 114, 142],
+      [6, 34, 62, 90, 118, 146],
+      [6, 30, 54, 78, 102, 126, 150],
+      [6, 24, 50, 76, 102, 128, 154],
+      [6, 28, 54, 80, 106, 132, 158],
+      [6, 32, 58, 84, 110, 136, 162],
+      [6, 26, 54, 82, 110, 138, 166],
+      [6, 30, 58, 86, 114, 142, 170]
+    ];
+    var G15 = (1 << 10) | (1 << 8) | (1 << 5) | (1 << 4) | (1 << 2) | (1 << 1) | (1 << 0);
+    var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0);
+    var G15_MASK = (1 << 14) | (1 << 12) | (1 << 10) | (1 << 4) | (1 << 1);
+
+    var _this = {};
+
+    var getBCHDigit = function(data) {
+      var digit = 0;
+      while (data != 0) {
+        digit += 1;
+        data >>>= 1;
+      }
+      return digit;
+    };
+
+    _this.getBCHTypeInfo = function(data) {
+      var d = data << 10;
+      while (getBCHDigit(d) - getBCHDigit(G15) >= 0) {
+        d ^= (G15 << (getBCHDigit(d) - getBCHDigit(G15) ) );
+      }
+      return ( (data << 10) | d) ^ G15_MASK;
+    };
+
+    _this.getBCHTypeNumber = function(data) {
+      var d = data << 12;
+      while (getBCHDigit(d) - getBCHDigit(G18) >= 0) {
+        d ^= (G18 << (getBCHDigit(d) - getBCHDigit(G18) ) );
+      }
+      return (data << 12) | d;
+    };
+
+    _this.getPatternPosition = function(typeNumber) {
+      return PATTERN_POSITION_TABLE[typeNumber - 1];
+    };
+
+    _this.getMaskFunction = function(maskPattern) {
+
+      switch (maskPattern) {
+
+      case QRMaskPattern.PATTERN000 :
+        return function(i, j) { return (i + j) % 2 == 0; };
+      case QRMaskPattern.PATTERN001 :
+        return function(i, j) { return i % 2 == 0; };
+      case QRMaskPattern.PATTERN010 :
+        return function(i, j) { return j % 3 == 0; };
+      case QRMaskPattern.PATTERN011 :
+        return function(i, j) { return (i + j) % 3 == 0; };
+      case QRMaskPattern.PATTERN100 :
+        return function(i, j) { return (Math.floor(i / 2) + Math.floor(j / 3) ) % 2 == 0; };
+      case QRMaskPattern.PATTERN101 :
+        return function(i, j) { return (i * j) % 2 + (i * j) % 3 == 0; };
+      case QRMaskPattern.PATTERN110 :
+        return function(i, j) { return ( (i * j) % 2 + (i * j) % 3) % 2 == 0; };
+      case QRMaskPattern.PATTERN111 :
+        return function(i, j) { return ( (i * j) % 3 + (i + j) % 2) % 2 == 0; };
+
+      default :
+        throw 'bad maskPattern:' + maskPattern;
+      }
+    };
+
+    _this.getErrorCorrectPolynomial = function(errorCorrectLength) {
+      var a = qrPolynomial([1], 0);
+      for (var i = 0; i < errorCorrectLength; i += 1) {
+        a = a.multiply(qrPolynomial([1, QRMath.gexp(i)], 0) );
+      }
+      return a;
+    };
+
+    _this.getLengthInBits = function(mode, type) {
+
+      if (1 <= type && type < 10) {
+
+        // 1 - 9
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 10;
+        case QRMode.MODE_ALPHA_NUM : return 9;
+        case QRMode.MODE_8BIT_BYTE : return 8;
+        case QRMode.MODE_KANJI     : return 8;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else if (type < 27) {
+
+        // 10 - 26
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 12;
+        case QRMode.MODE_ALPHA_NUM : return 11;
+        case QRMode.MODE_8BIT_BYTE : return 16;
+        case QRMode.MODE_KANJI     : return 10;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else if (type < 41) {
+
+        // 27 - 40
+
+        switch(mode) {
+        case QRMode.MODE_NUMBER    : return 14;
+        case QRMode.MODE_ALPHA_NUM : return 13;
+        case QRMode.MODE_8BIT_BYTE : return 16;
+        case QRMode.MODE_KANJI     : return 12;
+        default :
+          throw 'mode:' + mode;
+        }
+
+      } else {
+        throw 'type:' + type;
+      }
+    };
+
+    _this.getLostPoint = function(qrcode) {
+
+      var moduleCount = qrcode.getModuleCount();
+
+      var lostPoint = 0;
+
+      // LEVEL1
+
+      for (var row = 0; row < moduleCount; row += 1) {
+        for (var col = 0; col < moduleCount; col += 1) {
+
+          var sameCount = 0;
+          var dark = qrcode.isDark(row, col);
+
+          for (var r = -1; r <= 1; r += 1) {
+
+            if (row + r < 0 || moduleCount <= row + r) {
+              continue;
+            }
+
+            for (var c = -1; c <= 1; c += 1) {
+
+              if (col + c < 0 || moduleCount <= col + c) {
+                continue;
+              }
+
+              if (r == 0 && c == 0) {
+                continue;
+              }
+
+              if (dark == qrcode.isDark(row + r, col + c) ) {
+                sameCount += 1;
+              }
+            }
+          }
+
+          if (sameCount > 5) {
+            lostPoint += (3 + sameCount - 5);
+          }
+        }
+      };
+
+      // LEVEL2
+
+      for (var row = 0; row < moduleCount - 1; row += 1) {
+        for (var col = 0; col < moduleCount - 1; col += 1) {
+          var count = 0;
+          if (qrcode.isDark(row, col) ) count += 1;
+          if (qrcode.isDark(row + 1, col) ) count += 1;
+          if (qrcode.isDark(row, col + 1) ) count += 1;
+          if (qrcode.isDark(row + 1, col + 1) ) count += 1;
+          if (count == 0 || count == 4) {
+            lostPoint += 3;
+          }
+        }
+      }
+
+      // LEVEL3
+
+      for (var row = 0; row < moduleCount; row += 1) {
+        for (var col = 0; col < moduleCount - 6; col += 1) {
+          if (qrcode.isDark(row, col)
+              && !qrcode.isDark(row, col + 1)
+              &&  qrcode.isDark(row, col + 2)
+              &&  qrcode.isDark(row, col + 3)
+              &&  qrcode.isDark(row, col + 4)
+              && !qrcode.isDark(row, col + 5)
+              &&  qrcode.isDark(row, col + 6) ) {
+            lostPoint += 40;
+          }
+        }
+      }
+
+      for (var col = 0; col < moduleCount; col += 1) {
+        for (var row = 0; row < moduleCount - 6; row += 1) {
+          if (qrcode.isDark(row, col)
+              && !qrcode.isDark(row + 1, col)
+              &&  qrcode.isDark(row + 2, col)
+              &&  qrcode.isDark(row + 3, col)
+              &&  qrcode.isDark(row + 4, col)
+              && !qrcode.isDark(row + 5, col)
+              &&  qrcode.isDark(row + 6, col) ) {
+            lostPoint += 40;
+          }
+        }
+      }
+
+      // LEVEL4
+
+      var darkCount = 0;
+
+      for (var col = 0; col < moduleCount; col += 1) {
+        for (var row = 0; row < moduleCount; row += 1) {
+          if (qrcode.isDark(row, col) ) {
+            darkCount += 1;
+          }
+        }
+      }
+
+      var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
+      lostPoint += ratio * 10;
+
+      return lostPoint;
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // QRMath
+  //---------------------------------------------------------------------
+
+  var QRMath = function() {
+
+    var EXP_TABLE = new Array(256);
+    var LOG_TABLE = new Array(256);
+
+    // initialize tables
+    for (var i = 0; i < 8; i += 1) {
+      EXP_TABLE[i] = 1 << i;
+    }
+    for (var i = 8; i < 256; i += 1) {
+      EXP_TABLE[i] = EXP_TABLE[i - 4]
+        ^ EXP_TABLE[i - 5]
+        ^ EXP_TABLE[i - 6]
+        ^ EXP_TABLE[i - 8];
+    }
+    for (var i = 0; i < 255; i += 1) {
+      LOG_TABLE[EXP_TABLE[i] ] = i;
+    }
+
+    var _this = {};
+
+    _this.glog = function(n) {
+
+      if (n < 1) {
+        throw 'glog(' + n + ')';
+      }
+
+      return LOG_TABLE[n];
+    };
+
+    _this.gexp = function(n) {
+
+      while (n < 0) {
+        n += 255;
+      }
+
+      while (n >= 256) {
+        n -= 255;
+      }
+
+      return EXP_TABLE[n];
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // qrPolynomial
+  //---------------------------------------------------------------------
+
+  function qrPolynomial(num, shift) {
+
+    if (typeof num.length == 'undefined') {
+      throw num.length + '/' + shift;
+    }
+
+    var _num = function() {
+      var offset = 0;
+      while (offset < num.length && num[offset] == 0) {
+        offset += 1;
+      }
+      var _num = new Array(num.length - offset + shift);
+      for (var i = 0; i < num.length - offset; i += 1) {
+        _num[i] = num[i + offset];
+      }
+      return _num;
+    }();
+
+    var _this = {};
+
+    _this.getAt = function(index) {
+      return _num[index];
+    };
+
+    _this.getLength = function() {
+      return _num.length;
+    };
+
+    _this.multiply = function(e) {
+
+      var num = new Array(_this.getLength() + e.getLength() - 1);
+
+      for (var i = 0; i < _this.getLength(); i += 1) {
+        for (var j = 0; j < e.getLength(); j += 1) {
+          num[i + j] ^= QRMath.gexp(QRMath.glog(_this.getAt(i) ) + QRMath.glog(e.getAt(j) ) );
+        }
+      }
+
+      return qrPolynomial(num, 0);
+    };
+
+    _this.mod = function(e) {
+
+      if (_this.getLength() - e.getLength() < 0) {
+        return _this;
+      }
+
+      var ratio = QRMath.glog(_this.getAt(0) ) - QRMath.glog(e.getAt(0) );
+
+      var num = new Array(_this.getLength() );
+      for (var i = 0; i < _this.getLength(); i += 1) {
+        num[i] = _this.getAt(i);
+      }
+
+      for (var i = 0; i < e.getLength(); i += 1) {
+        num[i] ^= QRMath.gexp(QRMath.glog(e.getAt(i) ) + ratio);
+      }
+
+      // recursive call
+      return qrPolynomial(num, 0).mod(e);
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // QRRSBlock
+  //---------------------------------------------------------------------
+
+  var QRRSBlock = function() {
+
+    var RS_BLOCK_TABLE = [
+
+      // L
+      // M
+      // Q
+      // H
+
+      // 1
+      [1, 26, 19],
+      [1, 26, 16],
+      [1, 26, 13],
+      [1, 26, 9],
+
+      // 2
+      [1, 44, 34],
+      [1, 44, 28],
+      [1, 44, 22],
+      [1, 44, 16],
+
+      // 3
+      [1, 70, 55],
+      [1, 70, 44],
+      [2, 35, 17],
+      [2, 35, 13],
+
+      // 4
+      [1, 100, 80],
+      [2, 50, 32],
+      [2, 50, 24],
+      [4, 25, 9],
+
+      // 5
+      [1, 134, 108],
+      [2, 67, 43],
+      [2, 33, 15, 2, 34, 16],
+      [2, 33, 11, 2, 34, 12],
+
+      // 6
+      [2, 86, 68],
+      [4, 43, 27],
+      [4, 43, 19],
+      [4, 43, 15],
+
+      // 7
+      [2, 98, 78],
+      [4, 49, 31],
+      [2, 32, 14, 4, 33, 15],
+      [4, 39, 13, 1, 40, 14],
+
+      // 8
+      [2, 121, 97],
+      [2, 60, 38, 2, 61, 39],
+      [4, 40, 18, 2, 41, 19],
+      [4, 40, 14, 2, 41, 15],
+
+      // 9
+      [2, 146, 116],
+      [3, 58, 36, 2, 59, 37],
+      [4, 36, 16, 4, 37, 17],
+      [4, 36, 12, 4, 37, 13],
+
+      // 10
+      [2, 86, 68, 2, 87, 69],
+      [4, 69, 43, 1, 70, 44],
+      [6, 43, 19, 2, 44, 20],
+      [6, 43, 15, 2, 44, 16],
+
+      // 11
+      [4, 101, 81],
+      [1, 80, 50, 4, 81, 51],
+      [4, 50, 22, 4, 51, 23],
+      [3, 36, 12, 8, 37, 13],
+
+      // 12
+      [2, 116, 92, 2, 117, 93],
+      [6, 58, 36, 2, 59, 37],
+      [4, 46, 20, 6, 47, 21],
+      [7, 42, 14, 4, 43, 15],
+
+      // 13
+      [4, 133, 107],
+      [8, 59, 37, 1, 60, 38],
+      [8, 44, 20, 4, 45, 21],
+      [12, 33, 11, 4, 34, 12],
+
+      // 14
+      [3, 145, 115, 1, 146, 116],
+      [4, 64, 40, 5, 65, 41],
+      [11, 36, 16, 5, 37, 17],
+      [11, 36, 12, 5, 37, 13],
+
+      // 15
+      [5, 109, 87, 1, 110, 88],
+      [5, 65, 41, 5, 66, 42],
+      [5, 54, 24, 7, 55, 25],
+      [11, 36, 12, 7, 37, 13],
+
+      // 16
+      [5, 122, 98, 1, 123, 99],
+      [7, 73, 45, 3, 74, 46],
+      [15, 43, 19, 2, 44, 20],
+      [3, 45, 15, 13, 46, 16],
+
+      // 17
+      [1, 135, 107, 5, 136, 108],
+      [10, 74, 46, 1, 75, 47],
+      [1, 50, 22, 15, 51, 23],
+      [2, 42, 14, 17, 43, 15],
+
+      // 18
+      [5, 150, 120, 1, 151, 121],
+      [9, 69, 43, 4, 70, 44],
+      [17, 50, 22, 1, 51, 23],
+      [2, 42, 14, 19, 43, 15],
+
+      // 19
+      [3, 141, 113, 4, 142, 114],
+      [3, 70, 44, 11, 71, 45],
+      [17, 47, 21, 4, 48, 22],
+      [9, 39, 13, 16, 40, 14],
+
+      // 20
+      [3, 135, 107, 5, 136, 108],
+      [3, 67, 41, 13, 68, 42],
+      [15, 54, 24, 5, 55, 25],
+      [15, 43, 15, 10, 44, 16],
+
+      // 21
+      [4, 144, 116, 4, 145, 117],
+      [17, 68, 42],
+      [17, 50, 22, 6, 51, 23],
+      [19, 46, 16, 6, 47, 17],
+
+      // 22
+      [2, 139, 111, 7, 140, 112],
+      [17, 74, 46],
+      [7, 54, 24, 16, 55, 25],
+      [34, 37, 13],
+
+      // 23
+      [4, 151, 121, 5, 152, 122],
+      [4, 75, 47, 14, 76, 48],
+      [11, 54, 24, 14, 55, 25],
+      [16, 45, 15, 14, 46, 16],
+
+      // 24
+      [6, 147, 117, 4, 148, 118],
+      [6, 73, 45, 14, 74, 46],
+      [11, 54, 24, 16, 55, 25],
+      [30, 46, 16, 2, 47, 17],
+
+      // 25
+      [8, 132, 106, 4, 133, 107],
+      [8, 75, 47, 13, 76, 48],
+      [7, 54, 24, 22, 55, 25],
+      [22, 45, 15, 13, 46, 16],
+
+      // 26
+      [10, 142, 114, 2, 143, 115],
+      [19, 74, 46, 4, 75, 47],
+      [28, 50, 22, 6, 51, 23],
+      [33, 46, 16, 4, 47, 17],
+
+      // 27
+      [8, 152, 122, 4, 153, 123],
+      [22, 73, 45, 3, 74, 46],
+      [8, 53, 23, 26, 54, 24],
+      [12, 45, 15, 28, 46, 16],
+
+      // 28
+      [3, 147, 117, 10, 148, 118],
+      [3, 73, 45, 23, 74, 46],
+      [4, 54, 24, 31, 55, 25],
+      [11, 45, 15, 31, 46, 16],
+
+      // 29
+      [7, 146, 116, 7, 147, 117],
+      [21, 73, 45, 7, 74, 46],
+      [1, 53, 23, 37, 54, 24],
+      [19, 45, 15, 26, 46, 16],
+
+      // 30
+      [5, 145, 115, 10, 146, 116],
+      [19, 75, 47, 10, 76, 48],
+      [15, 54, 24, 25, 55, 25],
+      [23, 45, 15, 25, 46, 16],
+
+      // 31
+      [13, 145, 115, 3, 146, 116],
+      [2, 74, 46, 29, 75, 47],
+      [42, 54, 24, 1, 55, 25],
+      [23, 45, 15, 28, 46, 16],
+
+      // 32
+      [17, 145, 115],
+      [10, 74, 46, 23, 75, 47],
+      [10, 54, 24, 35, 55, 25],
+      [19, 45, 15, 35, 46, 16],
+
+      // 33
+      [17, 145, 115, 1, 146, 116],
+      [14, 74, 46, 21, 75, 47],
+      [29, 54, 24, 19, 55, 25],
+      [11, 45, 15, 46, 46, 16],
+
+      // 34
+      [13, 145, 115, 6, 146, 116],
+      [14, 74, 46, 23, 75, 47],
+      [44, 54, 24, 7, 55, 25],
+      [59, 46, 16, 1, 47, 17],
+
+      // 35
+      [12, 151, 121, 7, 152, 122],
+      [12, 75, 47, 26, 76, 48],
+      [39, 54, 24, 14, 55, 25],
+      [22, 45, 15, 41, 46, 16],
+
+      // 36
+      [6, 151, 121, 14, 152, 122],
+      [6, 75, 47, 34, 76, 48],
+      [46, 54, 24, 10, 55, 25],
+      [2, 45, 15, 64, 46, 16],
+
+      // 37
+      [17, 152, 122, 4, 153, 123],
+      [29, 74, 46, 14, 75, 47],
+      [49, 54, 24, 10, 55, 25],
+      [24, 45, 15, 46, 46, 16],
+
+      // 38
+      [4, 152, 122, 18, 153, 123],
+      [13, 74, 46, 32, 75, 47],
+      [48, 54, 24, 14, 55, 25],
+      [42, 45, 15, 32, 46, 16],
+
+      // 39
+      [20, 147, 117, 4, 148, 118],
+      [40, 75, 47, 7, 76, 48],
+      [43, 54, 24, 22, 55, 25],
+      [10, 45, 15, 67, 46, 16],
+
+      // 40
+      [19, 148, 118, 6, 149, 119],
+      [18, 75, 47, 31, 76, 48],
+      [34, 54, 24, 34, 55, 25],
+      [20, 45, 15, 61, 46, 16]
+    ];
+
+    var qrRSBlock = function(totalCount, dataCount) {
+      var _this = {};
+      _this.totalCount = totalCount;
+      _this.dataCount = dataCount;
+      return _this;
+    };
+
+    var _this = {};
+
+    var getRsBlockTable = function(typeNumber, errorCorrectionLevel) {
+
+      switch(errorCorrectionLevel) {
+      case QRErrorCorrectionLevel.L :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 0];
+      case QRErrorCorrectionLevel.M :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 1];
+      case QRErrorCorrectionLevel.Q :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 2];
+      case QRErrorCorrectionLevel.H :
+        return RS_BLOCK_TABLE[(typeNumber - 1) * 4 + 3];
+      default :
+        return undefined;
+      }
+    };
+
+    _this.getRSBlocks = function(typeNumber, errorCorrectionLevel) {
+
+      var rsBlock = getRsBlockTable(typeNumber, errorCorrectionLevel);
+
+      if (typeof rsBlock == 'undefined') {
+        throw 'bad rs block @ typeNumber:' + typeNumber +
+            '/errorCorrectionLevel:' + errorCorrectionLevel;
+      }
+
+      var length = rsBlock.length / 3;
+
+      var list = [];
+
+      for (var i = 0; i < length; i += 1) {
+
+        var count = rsBlock[i * 3 + 0];
+        var totalCount = rsBlock[i * 3 + 1];
+        var dataCount = rsBlock[i * 3 + 2];
+
+        for (var j = 0; j < count; j += 1) {
+          list.push(qrRSBlock(totalCount, dataCount) );
+        }
+      }
+
+      return list;
+    };
+
+    return _this;
+  }();
+
+  //---------------------------------------------------------------------
+  // qrBitBuffer
+  //---------------------------------------------------------------------
+
+  var qrBitBuffer = function() {
+
+    var _buffer = [];
+    var _length = 0;
+
+    var _this = {};
+
+    _this.getBuffer = function() {
+      return _buffer;
+    };
+
+    _this.getAt = function(index) {
+      var bufIndex = Math.floor(index / 8);
+      return ( (_buffer[bufIndex] >>> (7 - index % 8) ) & 1) == 1;
+    };
+
+    _this.put = function(num, length) {
+      for (var i = 0; i < length; i += 1) {
+        _this.putBit( ( (num >>> (length - i - 1) ) & 1) == 1);
+      }
+    };
+
+    _this.getLengthInBits = function() {
+      return _length;
+    };
+
+    _this.putBit = function(bit) {
+
+      var bufIndex = Math.floor(_length / 8);
+      if (_buffer.length <= bufIndex) {
+        _buffer.push(0);
+      }
+
+      if (bit) {
+        _buffer[bufIndex] |= (0x80 >>> (_length % 8) );
+      }
+
+      _length += 1;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrNumber
+  //---------------------------------------------------------------------
+
+  var qrNumber = function(data) {
+
+    var _mode = QRMode.MODE_NUMBER;
+    var _data = data;
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _data.length;
+    };
+
+    _this.write = function(buffer) {
+
+      var data = _data;
+
+      var i = 0;
+
+      while (i + 2 < data.length) {
+        buffer.put(strToNum(data.substring(i, i + 3) ), 10);
+        i += 3;
+      }
+
+      if (i < data.length) {
+        if (data.length - i == 1) {
+          buffer.put(strToNum(data.substring(i, i + 1) ), 4);
+        } else if (data.length - i == 2) {
+          buffer.put(strToNum(data.substring(i, i + 2) ), 7);
+        }
+      }
+    };
+
+    var strToNum = function(s) {
+      var num = 0;
+      for (var i = 0; i < s.length; i += 1) {
+        num = num * 10 + chatToNum(s.charAt(i) );
+      }
+      return num;
+    };
+
+    var chatToNum = function(c) {
+      if ('0' <= c && c <= '9') {
+        return c.charCodeAt(0) - '0'.charCodeAt(0);
+      }
+      throw 'illegal char :' + c;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrAlphaNum
+  //---------------------------------------------------------------------
+
+  var qrAlphaNum = function(data) {
+
+    var _mode = QRMode.MODE_ALPHA_NUM;
+    var _data = data;
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _data.length;
+    };
+
+    _this.write = function(buffer) {
+
+      var s = _data;
+
+      var i = 0;
+
+      while (i + 1 < s.length) {
+        buffer.put(
+          getCode(s.charAt(i) ) * 45 +
+          getCode(s.charAt(i + 1) ), 11);
+        i += 2;
+      }
+
+      if (i < s.length) {
+        buffer.put(getCode(s.charAt(i) ), 6);
+      }
+    };
+
+    var getCode = function(c) {
+
+      if ('0' <= c && c <= '9') {
+        return c.charCodeAt(0) - '0'.charCodeAt(0);
+      } else if ('A' <= c && c <= 'Z') {
+        return c.charCodeAt(0) - 'A'.charCodeAt(0) + 10;
+      } else {
+        switch (c) {
+        case ' ' : return 36;
+        case '$' : return 37;
+        case '%' : return 38;
+        case '*' : return 39;
+        case '+' : return 40;
+        case '-' : return 41;
+        case '.' : return 42;
+        case '/' : return 43;
+        case ':' : return 44;
+        default :
+          throw 'illegal char :' + c;
+        }
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qr8BitByte
+  //---------------------------------------------------------------------
+
+  var qr8BitByte = function(data) {
+
+    var _mode = QRMode.MODE_8BIT_BYTE;
+    var _data = data;
+    var _bytes = qrcode.stringToBytes(data);
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return _bytes.length;
+    };
+
+    _this.write = function(buffer) {
+      for (var i = 0; i < _bytes.length; i += 1) {
+        buffer.put(_bytes[i], 8);
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // qrKanji
+  //---------------------------------------------------------------------
+
+  var qrKanji = function(data) {
+
+    var _mode = QRMode.MODE_KANJI;
+    var _data = data;
+
+    var stringToBytes = qrcode.stringToBytesFuncs['SJIS'];
+    if (!stringToBytes) {
+      throw 'sjis not supported.';
+    }
+    !function(c, code) {
+      // self test for sjis support.
+      var test = stringToBytes(c);
+      if (test.length != 2 || ( (test[0] << 8) | test[1]) != code) {
+        throw 'sjis not supported.';
+      }
+    }('\u53cb', 0x9746);
+
+    var _bytes = stringToBytes(data);
+
+    var _this = {};
+
+    _this.getMode = function() {
+      return _mode;
+    };
+
+    _this.getLength = function(buffer) {
+      return ~~(_bytes.length / 2);
+    };
+
+    _this.write = function(buffer) {
+
+      var data = _bytes;
+
+      var i = 0;
+
+      while (i + 1 < data.length) {
+
+        var c = ( (0xff & data[i]) << 8) | (0xff & data[i + 1]);
+
+        if (0x8140 <= c && c <= 0x9FFC) {
+          c -= 0x8140;
+        } else if (0xE040 <= c && c <= 0xEBBF) {
+          c -= 0xC140;
+        } else {
+          throw 'illegal char at ' + (i + 1) + '/' + c;
+        }
+
+        c = ( (c >>> 8) & 0xff) * 0xC0 + (c & 0xff);
+
+        buffer.put(c, 13);
+
+        i += 2;
+      }
+
+      if (i < data.length) {
+        throw 'illegal char at ' + (i + 1);
+      }
+    };
+
+    return _this;
+  };
+
+  //=====================================================================
+  // GIF Support etc.
+  //
+
+  //---------------------------------------------------------------------
+  // byteArrayOutputStream
+  //---------------------------------------------------------------------
+
+  var byteArrayOutputStream = function() {
+
+    var _bytes = [];
+
+    var _this = {};
+
+    _this.writeByte = function(b) {
+      _bytes.push(b & 0xff);
+    };
+
+    _this.writeShort = function(i) {
+      _this.writeByte(i);
+      _this.writeByte(i >>> 8);
+    };
+
+    _this.writeBytes = function(b, off, len) {
+      off = off || 0;
+      len = len || b.length;
+      for (var i = 0; i < len; i += 1) {
+        _this.writeByte(b[i + off]);
+      }
+    };
+
+    _this.writeString = function(s) {
+      for (var i = 0; i < s.length; i += 1) {
+        _this.writeByte(s.charCodeAt(i) );
+      }
+    };
+
+    _this.toByteArray = function() {
+      return _bytes;
+    };
+
+    _this.toString = function() {
+      var s = '';
+      s += '[';
+      for (var i = 0; i < _bytes.length; i += 1) {
+        if (i > 0) {
+          s += ',';
+        }
+        s += _bytes[i];
+      }
+      s += ']';
+      return s;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // base64EncodeOutputStream
+  //---------------------------------------------------------------------
+
+  var base64EncodeOutputStream = function() {
+
+    var _buffer = 0;
+    var _buflen = 0;
+    var _length = 0;
+    var _base64 = '';
+
+    var _this = {};
+
+    var writeEncoded = function(b) {
+      _base64 += String.fromCharCode(encode(b & 0x3f) );
+    };
+
+    var encode = function(n) {
+      if (n < 0) {
+        // error.
+      } else if (n < 26) {
+        return 0x41 + n;
+      } else if (n < 52) {
+        return 0x61 + (n - 26);
+      } else if (n < 62) {
+        return 0x30 + (n - 52);
+      } else if (n == 62) {
+        return 0x2b;
+      } else if (n == 63) {
+        return 0x2f;
+      }
+      throw 'n:' + n;
+    };
+
+    _this.writeByte = function(n) {
+
+      _buffer = (_buffer << 8) | (n & 0xff);
+      _buflen += 8;
+      _length += 1;
+
+      while (_buflen >= 6) {
+        writeEncoded(_buffer >>> (_buflen - 6) );
+        _buflen -= 6;
+      }
+    };
+
+    _this.flush = function() {
+
+      if (_buflen > 0) {
+        writeEncoded(_buffer << (6 - _buflen) );
+        _buffer = 0;
+        _buflen = 0;
+      }
+
+      if (_length % 3 != 0) {
+        // padding
+        var padlen = 3 - _length % 3;
+        for (var i = 0; i < padlen; i += 1) {
+          _base64 += '=';
+        }
+      }
+    };
+
+    _this.toString = function() {
+      return _base64;
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // base64DecodeInputStream
+  //---------------------------------------------------------------------
+
+  var base64DecodeInputStream = function(str) {
+
+    var _str = str;
+    var _pos = 0;
+    var _buffer = 0;
+    var _buflen = 0;
+
+    var _this = {};
+
+    _this.read = function() {
+
+      while (_buflen < 8) {
+
+        if (_pos >= _str.length) {
+          if (_buflen == 0) {
+            return -1;
+          }
+          throw 'unexpected end of file./' + _buflen;
+        }
+
+        var c = _str.charAt(_pos);
+        _pos += 1;
+
+        if (c == '=') {
+          _buflen = 0;
+          return -1;
+        } else if (c.match(/^\s$/) ) {
+          // ignore if whitespace.
+          continue;
+        }
+
+        _buffer = (_buffer << 6) | decode(c.charCodeAt(0) );
+        _buflen += 6;
+      }
+
+      var n = (_buffer >>> (_buflen - 8) ) & 0xff;
+      _buflen -= 8;
+      return n;
+    };
+
+    var decode = function(c) {
+      if (0x41 <= c && c <= 0x5a) {
+        return c - 0x41;
+      } else if (0x61 <= c && c <= 0x7a) {
+        return c - 0x61 + 26;
+      } else if (0x30 <= c && c <= 0x39) {
+        return c - 0x30 + 52;
+      } else if (c == 0x2b) {
+        return 62;
+      } else if (c == 0x2f) {
+        return 63;
+      } else {
+        throw 'c:' + c;
+      }
+    };
+
+    return _this;
+  };
+
+  //---------------------------------------------------------------------
+  // gifImage (B/W)
+  //---------------------------------------------------------------------
+
+  var gifImage = function(width, height) {
+
+    var _width = width;
+    var _height = height;
+    var _data = new Array(width * height);
+
+    var _this = {};
+
+    _this.setPixel = function(x, y, pixel) {
+      _data[y * _width + x] = pixel;
+    };
+
+    _this.write = function(out) {
+
+      //---------------------------------
+      // GIF Signature
+
+      out.writeString('GIF87a');
+
+      //---------------------------------
+      // Screen Descriptor
+
+      out.writeShort(_width);
+      out.writeShort(_height);
+
+      out.writeByte(0x80); // 2bit
+      out.writeByte(0);
+      out.writeByte(0);
+
+      //---------------------------------
+      // Global Color Map
+
+      // black
+      out.writeByte(0x00);
+      out.writeByte(0x00);
+      out.writeByte(0x00);
+
+      // white
+      out.writeByte(0xff);
+      out.writeByte(0xff);
+      out.writeByte(0xff);
+
+      //---------------------------------
+      // Image Descriptor
+
+      out.writeString(',');
+      out.writeShort(0);
+      out.writeShort(0);
+      out.writeShort(_width);
+      out.writeShort(_height);
+      out.writeByte(0);
+
+      //---------------------------------
+      // Local Color Map
+
+      //---------------------------------
+      // Raster Data
+
+      var lzwMinCodeSize = 2;
+      var raster = getLZWRaster(lzwMinCodeSize);
+
+      out.writeByte(lzwMinCodeSize);
+
+      var offset = 0;
+
+      while (raster.length - offset > 255) {
+        out.writeByte(255);
+        out.writeBytes(raster, offset, 255);
+        offset += 255;
+      }
+
+      out.writeByte(raster.length - offset);
+      out.writeBytes(raster, offset, raster.length - offset);
+      out.writeByte(0x00);
+
+      //---------------------------------
+      // GIF Terminator
+      out.writeString(';');
+    };
+
+    var bitOutputStream = function(out) {
+
+      var _out = out;
+      var _bitLength = 0;
+      var _bitBuffer = 0;
+
+      var _this = {};
+
+      _this.write = function(data, length) {
+
+        if ( (data >>> length) != 0) {
+          throw 'length over';
+        }
+
+        while (_bitLength + length >= 8) {
+          _out.writeByte(0xff & ( (data << _bitLength) | _bitBuffer) );
+          length -= (8 - _bitLength);
+          data >>>= (8 - _bitLength);
+          _bitBuffer = 0;
+          _bitLength = 0;
+        }
+
+        _bitBuffer = (data << _bitLength) | _bitBuffer;
+        _bitLength = _bitLength + length;
+      };
+
+      _this.flush = function() {
+        if (_bitLength > 0) {
+          _out.writeByte(_bitBuffer);
+        }
+      };
+
+      return _this;
+    };
+
+    var getLZWRaster = function(lzwMinCodeSize) {
+
+      var clearCode = 1 << lzwMinCodeSize;
+      var endCode = (1 << lzwMinCodeSize) + 1;
+      var bitLength = lzwMinCodeSize + 1;
+
+      // Setup LZWTable
+      var table = lzwTable();
+
+      for (var i = 0; i < clearCode; i += 1) {
+        table.add(String.fromCharCode(i) );
+      }
+      table.add(String.fromCharCode(clearCode) );
+      table.add(String.fromCharCode(endCode) );
+
+      var byteOut = byteArrayOutputStream();
+      var bitOut = bitOutputStream(byteOut);
+
+      // clear code
+      bitOut.write(clearCode, bitLength);
+
+      var dataIndex = 0;
+
+      var s = String.fromCharCode(_data[dataIndex]);
+      dataIndex += 1;
+
+      while (dataIndex < _data.length) {
+
+        var c = String.fromCharCode(_data[dataIndex]);
+        dataIndex += 1;
+
+        if (table.contains(s + c) ) {
+
+          s = s + c;
+
+        } else {
+
+          bitOut.write(table.indexOf(s), bitLength);
+
+          if (table.size() < 0xfff) {
+
+            if (table.size() == (1 << bitLength) ) {
+              bitLength += 1;
+            }
+
+            table.add(s + c);
+          }
+
+          s = c;
+        }
+      }
+
+      bitOut.write(table.indexOf(s), bitLength);
+
+      // end code
+      bitOut.write(endCode, bitLength);
+
+      bitOut.flush();
+
+      return byteOut.toByteArray();
+    };
+
+    var lzwTable = function() {
+
+      var _map = {};
+      var _size = 0;
+
+      var _this = {};
+
+      _this.add = function(key) {
+        if (_this.contains(key) ) {
+          throw 'dup key:' + key;
+        }
+        _map[key] = _size;
+        _size += 1;
+      };
+
+      _this.size = function() {
+        return _size;
+      };
+
+      _this.indexOf = function(key) {
+        return _map[key];
+      };
+
+      _this.contains = function(key) {
+        return typeof _map[key] != 'undefined';
+      };
+
+      return _this;
+    };
+
+    return _this;
+  };
+
+  var createDataURL = function(width, height, getPixel) {
+    var gif = gifImage(width, height);
+    for (var y = 0; y < height; y += 1) {
+      for (var x = 0; x < width; x += 1) {
+        gif.setPixel(x, y, getPixel(x, y) );
+      }
+    }
+
+    var b = byteArrayOutputStream();
+    gif.write(b);
+
+    var base64 = base64EncodeOutputStream();
+    var bytes = b.toByteArray();
+    for (var i = 0; i < bytes.length; i += 1) {
+      base64.writeByte(bytes[i]);
+    }
+    base64.flush();
+
+    return 'data:image/gif;base64,' + base64;
+  };
+
+  //---------------------------------------------------------------------
+  // returns qrcode function.
+
+  return qrcode;
+}();
+
+// multibyte support
+!function() {
+
+  qrcode.stringToBytesFuncs['UTF-8'] = function(s) {
+    // http://stackoverflow.com/questions/18729405/how-to-convert-utf8-string-to-byte-array
+    function toUTF8Array(str) {
+      var utf8 = [];
+      for (var i=0; i < str.length; i++) {
+        var charcode = str.charCodeAt(i);
+        if (charcode < 0x80) utf8.push(charcode);
+        else if (charcode < 0x800) {
+          utf8.push(0xc0 | (charcode >> 6),
+              0x80 | (charcode & 0x3f));
+        }
+        else if (charcode < 0xd800 || charcode >= 0xe000) {
+          utf8.push(0xe0 | (charcode >> 12),
+              0x80 | ((charcode>>6) & 0x3f),
+              0x80 | (charcode & 0x3f));
+        }
+        // surrogate pair
+        else {
+          i++;
+          // UTF-16 encodes 0x10000-0x10FFFF by
+          // subtracting 0x10000 and splitting the
+          // 20 bits of 0x0-0xFFFFF into two halves
+          charcode = 0x10000 + (((charcode & 0x3ff)<<10)
+            | (str.charCodeAt(i) & 0x3ff));
+          utf8.push(0xf0 | (charcode >>18),
+              0x80 | ((charcode>>12) & 0x3f),
+              0x80 | ((charcode>>6) & 0x3f),
+              0x80 | (charcode & 0x3f));
+        }
+      }
+      return utf8;
+    }
+    return toUTF8Array(s);
+  };
+
+}();
+
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+      define([], factory);
+  } else if (typeof exports === 'object') {
+      module.exports = factory();
+  }
+}(function () {
+    return qrcode;
+}));
+
+</script>
+<script>
+/* ============ 用户态（localStorage 模拟） ============ */
+const LS='xunsu_user_v1';
+function uid(){return 'XS100_'+Math.random().toString(36).slice(2,6).toUpperCase()}
+function defaultUser(){
+  return {nickname:'玉米小伙伴',userId:uid(),registerDate:new Date().toISOString().slice(0,10),
+    points:0,ownedCards:['initial'],answered:[],history:[],lastAnswerDate:null};
+}
+let U=JSON.parse(localStorage.getItem(LS)); if(!U) U=defaultUser();
+
+/* ============ 每日一题 题库（权威来源） ============ */
+const QB=[
+ {cat:'减塑',q:'据联合国环境规划署（UNEP）2021年报告，每年约有多少吨塑料垃圾流入海洋？',o:['约110万吨','约1100万吨','约1.1亿吨','约11万吨'],a:1,src:'UNEP《从污染到解决方案：全球海洋垃圾和塑料污染评估》（2021）'},
+ {cat:'农业',q:'联合国粮农组织（FAO）估计，全球每年约有多少食物被损失或浪费？',o:['约1/10','约1/3（约13亿吨）','约一半','约1/5'],a:1,src:'FAO SAVE FOOD 全球倡议'},
+ {cat:'生态',q:'农业用水占全球淡水取用总量的比例约为？',o:['约30%','约50%','约70%（部分发展中国家达95%）','约90%'],a:2,src:'联合国粮农组织（FAO）'},
+ {cat:'减塑',q:'关于“可降解塑料”，下列说法正确的是？',o:['所有可降解塑料在自然中都能快速分解','“可堆肥”通常需工业堆肥条件，并非随意丢弃即分解','可降解塑料不需要回收','应大量使用可降解塑料替代一切'],a:1,src:'欧盟 / ISO 堆肥标准；生态环境部'},
+ {cat:'环保',q:'据联合国环境规划署，全球已生产的塑料中，最终被回收的比例约为？',o:['约9%','约30%','约50%','约70%'],a:0,src:'联合国环境规划署（UNEP）'},
+ {cat:'生态',q:'据 IPBES 2019 年评估，约有多少物种正面临灭绝威胁？',o:['约1000种','约1万种','约100万种','约1000万种'],a:2,src:'IPBES《全球生物多样性与生态系统评估》（2019）'},
+ {cat:'农业',q:'稻田（水稻种植）是下列哪种温室气体的重要排放源？',o:['二氧化碳','甲烷','臭氧','二氧化硫'],a:1,src:'FAO / IPCC'},
+ {cat:'可持续',q:'据《科学》(Science) 2018 年一项大规模荟萃分析，用植物基饮食替代肉类和乳制品，可使食物相关碳排放最高降低约？',o:['10%','73%','50%','90%'],a:1,src:'Poore & Nemecek, Science, 2018'},
+ {cat:'减塑',q:'中国“新版限塑令”（2020年发布）要求，自2021年1月1日起餐饮行业率先禁用？',o:['不可降解一次性塑料吸管','所有塑料杯','塑料餐具','塑料包装袋'],a:0,src:'国家发改委、生态环境部《关于进一步加强塑料污染治理的意见》（2020）'},
+ {cat:'环保',q:'厨余垃圾填埋会产生大量甲烷。相比之下，对其进行堆肥处理主要有助于？',o:['增加甲烷排放','减少温室气体并制成肥料','加速塑料分解','没有任何好处'],a:1,src:'美国环保署（EPA）食物回收层级'},
+ {cat:'可持续',q:'联合国可持续发展目标（SDG 12.3）提出，到2030年应？',o:['全面禁止食品销售','将人均食物浪费减半','取消所有保质期','停止农业生产'],a:1,src:'联合国 SDG 12.3'},
+ {cat:'生态',q:'海洋吸收了约多少比例的人为二氧化碳排放？',o:['约10%','约30%','约50%','约70%'],a:1,src:'NOAA / IPCC'},
+ {cat:'农业',q:'据FAO，为满足2050年约97亿人口的粮食需求，全球粮食产量需比2012年水平增加约？',o:['10%','30%','50%','100%'],a:2,src:'FAO《2050年粮食安全》'},
+ {cat:'环保',q:'据联合国，在约1/3食物被浪费的同时，2021年全球约多少人口处于饥饿？',o:['约1亿','约8.28亿','约30亿','约50亿'],a:1,src:'联合国《世界粮食安全和营养状况》'},
+ {cat:'生态',q:'FAO估计，全球森林砍伐中约有百分之几由农业扩张驱动？',o:['约20%','约40%','约80%','约99%'],a:2,src:'联合国粮农组织（FAO）'},
+ {cat:'减塑',q:'关于微塑料，下列说法正确的是？',o:['微塑料只存在于海洋','研究已在人体血液和胎盘中检出微塑料','微塑料对人体完全无害','微塑料无法进入人体'],a:1,src:'Ragusa et al., 2021；Vethaak & Legler, 2022'},
+ {cat:'可持续',q:'中国提出“双碳”目标，即二氧化碳排放力争？',o:['2025年达峰、2050中和','2030年前达峰、2060年前中和','2035达峰、2070中和','已提前实现'],a:1,src:'中国官方“碳达峰、碳中和”目标'},
+ {cat:'农业',q:'在中国城市生活垃圾中，厨余垃圾通常占比约为？',o:['不到10%','约50%—60%','约20%','约90%'],a:1,src:'住建部 / 生态环境部相关统计'},
+ {cat:'生态',q:'据联合国环境规划署，海洋中多达多少比例的海鸟胃内被发现含有塑料？',o:['约10%','约30%','约50%','多达90%'],a:3,src:'联合国环境规划署（UNEP）'},
+ {cat:'减塑',q:'快递包装是塑料污染来源之一。减少其环境影响的有效做法不包括？',o:['重复使用纸箱','优先选择可循环包装','过度包装、一次性使用','纸箱回收'],a:2,src:'生态环境部 / 国家邮政局'},
+ {cat:'环保',q:'下列哪种做法对减少食物浪费最直接有效？',o:['按需采购、吃多少买多少','买更多打折食品囤积','把临期食物丢弃','只买进口食品'],a:0,src:'FAO 减少食物损失与浪费建议'},
+ {cat:'农业',q:'关于玉米，下列说法错误的是？',o:['玉米原产于美洲','玉米是重要的能量饲料','玉米只能食用不能工业加工','玉米可用于生产淀粉、乙醇等'],a:2,src:'FAO / 常识'},
+ {cat:'可持续',q:'联合国指出，全球约多少人口每年至少有一个月经历严重缺水？',o:['约10亿','约20亿','约40亿','约60亿'],a:2,src:'UN-Water / WWF'},
+ {cat:'减塑',q:'绿色助推（green nudges）通过轻微改变选择环境来引导环保行为，例如？',o:['默认提供小份餐具、可循环选项','强制罚款','关闭所有选项','不予提示'],a:0,src:'行为科学 / 《绿色助推》（卢乐书）等'}
+];
+
+/* ============ 渲染：广场 ============ */
+const STORIES=[
+ {tag:'真实故事 · 稀客厅',t:'我帮留守照护者卖玉米，但可能根本卖不掉',d:'远安脚痛湾的“守村人”——留守妇女与老人，用不施化肥农药的方式种下带回的玉米种子，想做“稀客种子库”交换试种。作者说：卖货前，得先让人看见货背后站着的人。',bg:'img/story-1.jpg',url:'https://mp.weixin.qq.com/s/LdUW74gYW7HBX2FPRX9DPw'},
+ {tag:'示例',t:'王阿姨的玉米皮编织',d:'山东农户把收获后的玉米皮晒干编织成收纳篮，变废为宝。',bg:'img/story-2.jpg'},
+ {tag:'示例',t:'张大姐的文玩玉米',d:'河北农户按成熟度分级电商直销观赏型玉米，减少损耗。',bg:'img/story-3.jpg'}
+];
+const ECO=[
+ {h:'减塑三步走',p:'拒绝一次性 → 重复使用 → 做好分类回收，优先级依次递减。'},
+ {h:'食物不浪费',p:'按需采购、吃多少买多少，全球约1/3食物本可避免浪费。'},
+ {h:'循环包装',p:'纸箱、保温箱循环使用，比单次塑料更环保也常更经济。'}
+];
+const EVENTS=[
+ {d:'7',m:'11月',t:'循塑100小组汇报',p:'上午 · 小组阶段性进展汇报'}
+];
+const PRODUCTS=[
+ {kind:'农产品',t:'文玩玉米（示例）',price:'¥39',bg:'img/prod-1.jpg'},
+ {kind:'文创',t:'玉米皮编织篮（示例）',price:'¥69',bg:'img/prod-2.jpg'},
+ {kind:'农产品',t:'当季糙米（示例）',price:'¥45',bg:'img/prod-3.jpg'},
+ {kind:'文创',t:'百变玉米贴纸（示例）',price:'¥15',bg:'img/prod-4.jpg'}
+];
+function renderPlaza(){
+  document.getElementById('stories').innerHTML=STORIES.map(s=>`<div class="story"><div class="ph" style="background-image:url('${s.bg}')"></div><div class="body"><span class="tag">${s.tag}</span><h4>${s.t}</h4><p>${s.d}</p>${s.url?`<a class="src-link" href="${s.url}" target="_blank" rel="noopener">查看原文 ↗</a>`:''}</div></div>`).join('');
+  document.getElementById('eco').innerHTML=ECO.map(e=>`<div class="item"><h4>${e.h}</h4><p>${e.p}</p></div>`).join('');
+  document.getElementById('events').innerHTML=EVENTS.map(e=>`<div class="evt"><div class="date">${e.d}<small>${e.m}</small></div><div class="info"><h4>${e.t}</h4><p>${e.p}</p></div></div>`).join('');
+  document.getElementById('products').innerHTML=PRODUCTS.map((p,i)=>`<div class="prod"><div class="ph" style="background-image:url('${p.bg}')"><span class="kind">${p.kind}</span><span class="price">${p.price}</span></div><div class="body"><h4>${p.t}</h4><button class="btn" onclick="openBuy('${p.t}','${p.price}','${p.kind}')">购买</button></div></div>`).join('');
+}
+
+/* ============ 每日一题 ============ */
+const todayStr=()=>new Date().toISOString().slice(0,10);
+let curQ=null;
+function pickQuestion(){
+  const pool=QB.filter(x=>!U.answered.includes(QB.indexOf(x)));
+  if(pool.length===0) return null;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+function optStatusHTML(q, chosenIdx){
+  return q.o.map((o,i)=>{
+    let cls='opt';
+    if(i===q.a)cls+=' correct';
+    else cls+=' dim';
+    return `<div class="${cls}"><span class="dot">${String.fromCharCode(65+i)}</span><span>${o}</span></div>`;
+  }).join('');
+}
+function renderQuiz(){
+  const wrap=document.getElementById('quizWrap');
+  if(U.lastAnswerDate===todayStr()){
+    const last=U.history[U.history.length-1];
+    const q=QB[last.qid];
+    wrap.innerHTML=`<div class="quiz">
+      <span class="cat">${q.cat}</span>
+      <h3>${q.q}</h3>
+      <div id="opts">${optStatusHTML(q, last.cain)}</div>
+      <div class="feedback"><b>${last.correct?'你答对啦，+5 积分':'正确答案'}</b>：${q.o[q.a]}<span class="src">信息来源：${q.src}</span></div>
+      <button class="btn ghost block" style="margin-top:14px" onclick="openShare()">分享</button>
+      <p class="qfoot">今日已答 ✓ · 明天再来挑战新题</p>
+    </div>`;
+    return;
+  }
+  curQ=pickQuestion();
+  if(!curQ){wrap.innerHTML=`<div class="quiz"><div class="done-box"><div class="big">题库已答完 🌽</div><p>所有题目都挑战过啦，感谢参与！</p></div></div>`;return;}
+  const qi=QB.indexOf(curQ);
+  wrap.innerHTML=`<div class="quiz">
+    <span class="cat">${curQ.cat}</span>
+    <h3>${curQ.q}</h3>
+    <div id="opts">${curQ.o.map((o,i)=>`<div class="opt" onclick="choose(${i})"><span class="dot">${String.fromCharCode(65+i)}</span><span>${o}</span></div>`).join('')}</div>
+    <button class="btn block" id="submitBtn" disabled style="opacity:.5;margin-top:4px" onclick="submit()">提交答案</button>
+  </div>`;
+}
+let chosen=-1;
+function choose(i){
+  if(U.lastAnswerDate===todayStr())return;
+  chosen=i;
+  document.querySelectorAll('#opts .opt').forEach((el,idx)=>el.classList.toggle('sel',idx===i));
+  const b=document.getElementById('submitBtn');b.disabled=false;b.style.opacity=1;
+}
+function submit(){
+  if(chosen<0||!curQ)return;
+  const qi=QB.indexOf(curQ), correct=chosen===curQ.a, gain=correct?5:0;
+  U.answered.push(qi);
+  if(correct)U.points+=gain;
+  U.lastAnswerDate=todayStr();
+  U.history.push({qid:qi,q:curQ.q,correct,cain:chosen,gain,date:todayStr()});
+  save();
+  const opts=document.querySelectorAll('#opts .opt');
+  opts.forEach((el,idx)=>{
+    el.classList.remove('sel');
+    if(idx===curQ.a)el.classList.add('correct');
+    else el.classList.add('dim');
+  });
+  document.getElementById('submitBtn').outerHTML=`<div class="feedback"><b>${correct?'答对啦 +5 积分':'正确答案'}</b>：${curQ.o[curQ.a]}<span class="src">信息来源：${curQ.src}</span></div><button class="btn ghost block" style="margin-top:14px" onclick="openShare()">分享</button><p class="qfoot">今日已答 ✓ · 明天再来挑战新题</p>`;
+  renderMe();
+}
+
+/* ============ 点子市集 ============ */
+const PERSP=['全部','农户','消费者','设计师','社区','非遗'];
+const IDEAS=[
+ {p:'农户',t:'玉米皮编织收纳篮',d:'把收获后的玉米皮晒干编织成收纳篮，变废为宝，增加农户收入。',o:'案主：山东 王阿姨'},
+ {p:'消费者',t:'净菜 + 可循环包装',d:'社区团购采用可循环保温箱，归还清洗后重复使用，减少一次性泡沫箱。',o:'案主：上海 社区团长 小林'},
+ {p:'设计师',t:'稻壳填充礼盒',d:'用稻壳、纸屑替代塑料填充物，保护农产品的同时传递环保理念。',o:'案主：设计师 Mia'},
+ {p:'社区',t:'社区堆肥角',d:'厨余与落叶堆肥，反哺社区菜园，形成小闭环。',o:'案主：向阳社区'},
+ {p:'非遗',t:'玉米皮草编 × 非遗联名',d:'联合草编非遗传承人，开发限定款编织挂件，收益反哺手艺人与农户。',o:'案主：草编传承人 李师傅'},
+ {p:'农户',t:'文玩玉米错峰销售',d:'将观赏型文玩玉米按成熟度分级，电商直销，减少中间损耗。',o:'案主：河北 张大姐'}
+];
+const TIPS=[
+ {h:'🌽 填充物可以用什么',p:'稻壳、玉米皮、碎纸屑、蘑菇包装（菌丝）都是塑料填充泡棉的好替代，轻便又易降解。'},
+ {h:'🌽 玉米的一生',p:'种子→发芽→拔节→抽雄→吐丝→灌浆→成熟→收获→玉米皮再利用，全株皆可用。'},
+ {h:'🌽 环保包装拍卖会',p:'办一场“为什么环保材质更贵”的科普拍卖，让参与者理解成本与价值，而非单纯比价。'}
+];
+let curPersp='全部';
+function renderPersp(){
+  document.getElementById('perspBar').innerHTML=PERSP.map(p=>`<button class="${p===curPersp?'on':''}" onclick="setPersp('${p}')">${p}</button>`).join('');
+}
+function setPersp(p){curPersp=p;renderPersp();renderIdeas();}
+function renderIdeas(){
+  const list=curPersp==='全部'?IDEAS:IDEAS.filter(x=>x.p===curPersp);
+  document.getElementById('ideaList').innerHTML=list.map(i=>`<div class="idea"><div class="top"><span class="ptag">${i.p}</span><h4>${i.t}</h4></div><p>${i.d}</p><span class="owner">${i.o}</span></div>`).join('');
+  document.getElementById('tips').innerHTML=TIPS.map(t=>`<div class="tip"><h4>${t.h}</h4><p>${t.p}</p></div>`).join('');
+}
+
+/* ============ 我的 ============ */
+function renderMe(){
+  document.getElementById('meName').textContent=U.nickname;
+  document.getElementById('meMeta').textContent=`ID：${U.userId} · 注册于 ${U.registerDate}`;
+  document.getElementById('mePoints').textContent=U.points;
+  document.getElementById('meCards').textContent=U.ownedCards.length;
+  document.getElementById('meAns').textContent=U.history.length;
+  const rec=document.getElementById('recList');
+  if(U.history.length===0){rec.innerHTML='<div class="row"><span class="q" style="color:var(--muted)">还没有答题记录，去「每日一题」挑战吧～</span></div>';}
+  else rec.innerHTML=U.history.map((h,i)=>({h,i})).slice().reverse().map(({h,i})=>`<div class="row click" onclick="openRecDetail(${i})"><span class="ok ${h.correct?'':'no'}">${h.correct?'✓':'×'}</span><span class="q">${h.q.length>18? h.q.slice(0,18)+'…':h.q}</span><span class="d">${h.date.slice(5)}</span><span class="pt">+${h.gain}</span></div>`).join('');
+  // 粉丝群二维码
+  try{
+    const qr=qrcode(0,'M');qr.addData('https://xunsu100.example.com/fan');qr.make();
+    document.getElementById('fanQr').innerHTML=qr.createSvgTag({cellSize:3,margin:8,scalable:true});
+  }catch(e){document.getElementById('fanQr').textContent='QR';}
+}
+
+/* ============ 分享卡（canvas + 二维码） ============ */
+let shareData=null;
+function openShare(){
+  const last=U.history[U.history.length-1];
+  if(!last){toast('请先完成今日一题');return;}
+  const q=QB[last.qid];
+  shareData={qid:last.qid,q:q.q,a:q.o[q.a],src:q.src,correct:last.correct};
+  drawShare();
+  document.getElementById('shareMask').classList.add('show');
+}
+function closeShare(){document.getElementById('shareMask').classList.remove('show');}
+function drawShare(){
+  const cv=document.getElementById('shareCv'),ctx=cv.getContext('2d');
+  const W=720;
+  const cardX=40,cardY=44,cardW=W-80,padX=cardX+44;
+  const q=QB[shareData.qid];
+  const letters=['A','B','C','D'];
+  const now=new Date();
+  const dateStr=`${now.getFullYear()}.${String(now.getMonth()+1).padStart(2,'0')}.${String(now.getDate()).padStart(2,'0')}`;
+
+  // 预测量内容高度（须先设对应字体）
+  ctx.font='700 23px "Noto Sans SC",sans-serif';
+  const qLines=Math.max(1,measureCN(ctx,shareData.q,cardW-88));
+  ctx.font='400 19px "Noto Sans SC",sans-serif';
+  let optH=0;
+  for(let i=0;i<q.o.length;i++){
+    const ol=Math.max(1,measureCN(ctx,q.o[i],cardW-104));
+    optH+=Math.max(34,ol*26+12);
+  }
+  const srcText='信息来源：'+shareData.src;
+  ctx.font='400 15px "Noto Sans SC",sans-serif';
+  const sLines=Math.max(1,measureCN(ctx,srcText,cardW-88));
+
+  const topPad=232, gapAfterQ=24, gapToSrc=8, bottomPad=22, minCardH=660;
+  let contentH=qLines*34+gapAfterQ+optH+gapToSrc+sLines*22;
+  let cardH=topPad+contentH+bottomPad, extra=0;
+  if(cardH<minCardH){extra=minCardH-cardH;cardH=minCardH;}
+  const dy=extra/3;
+  const qStart=cardY+topPad+dy, gAfterQ=gapAfterQ+dy, gToSrc=gapToSrc+dy;
+  const cardBottom=cardY+cardH;
+
+  // 画布：长4宽3（720×960）；内容超长时自动增高
+  const qz=150, qrBlock=198;
+  let H=Math.max(960,cardBottom+16+qrBlock);
+  cv.width=W;cv.height=Math.round(H);
+  const qrTop=H-qrBlock;
+
+  // 背景
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,'#F3F7EA');g.addColorStop(1,'#E6F0D8');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+  // 有机圆斑
+  ctx.fillStyle='rgba(34,139,34,.10)';circle(ctx,W*0.85,H*0.1,110);
+  ctx.fillStyle='rgba(135,206,235,.18)';circle(ctx,W*0.08,H*0.9,140);
+  ctx.fillStyle='rgba(139,69,19,.07)';circle(ctx,W*0.92,H*0.88,80);
+
+  // 卡片底
+  roundRect(ctx,cardX,cardY,cardW,cardH,26);ctx.fillStyle='#FFFFFF';ctx.fill();
+  ctx.strokeStyle='#E7ECDD';ctx.lineWidth=2;ctx.stroke();
+
+  // 标题区（瑞幸风：大日期为视觉锚点）
+  ctx.textAlign='center';
+  ctx.fillStyle='#1B5E20';ctx.font='700 34px "Noto Serif SC",serif';
+  ctx.fillText('百变玉米',W/2,cardY+58);
+  ctx.fillStyle='#6B756B';ctx.font='400 17px "Noto Sans SC",sans-serif';
+  ctx.fillText('每日一题，离可持续更近一点',W/2,cardY+90);
+  ctx.fillStyle='#228B22';ctx.font='700 54px "Noto Serif SC",serif';
+  ctx.fillText(dateStr,W/2,cardY+162);
+
+  // 题目
+  ctx.textAlign='left';
+  ctx.fillStyle='#2B3A2B';ctx.font='700 23px "Noto Sans SC",sans-serif';
+  wrapText(ctx,shareData.q,padX,qStart,cardW-88,34);
+
+  // 选项（不区分对错，统一样式）
+  let oy=qStart+qLines*34+gAfterQ;
+  for(let i=0;i<q.o.length;i++){
+    ctx.beginPath();ctx.arc(padX+14,oy+12,14,0,Math.PI*2);
+    ctx.fillStyle='#EDEFE8';ctx.fill();
+    ctx.fillStyle='#8A938A';ctx.font='700 16px "Noto Sans SC",sans-serif';
+    ctx.textAlign='center';ctx.fillText(letters[i],padX+14,oy+17);
+    ctx.textAlign='left';
+    ctx.fillStyle='#5A635A';ctx.font='400 19px "Noto Sans SC",sans-serif';
+    const lines=wrapLines(ctx,q.o[i],padX+40,oy+17,cardW-104,26);
+    oy+=Math.max(34,lines*26+12);
+  }
+  // 来源
+  ctx.fillStyle='#9AA39A';ctx.font='400 15px "Noto Sans SC",sans-serif';
+  wrapText(ctx,srcText,padX,oy+gToSrc,cardW-88,22);
+
+  // 二维码（固定于底部）
+  try{
+    const qr=qrcode(0,'M');qr.addData('https://wintermoon123.github.io/baibianyumi/');qr.make();
+    const url=qr.createDataURL(6,8);
+    const img=new Image();
+    img.onload=()=>{
+      ctx.drawImage(img,(W-qz)/2,qrTop,qz,qz);
+      ctx.fillStyle='#6B756B';ctx.font='400 18px "Noto Sans SC",sans-serif';ctx.textAlign='center';
+      ctx.fillText('扫码来答每日一题',W/2,qrTop+qz+26);
+    };
+    img.src=url;
+  }catch(e){}
+}
+function roundRect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function circle(ctx,x,y,r){ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();}
+function wrapText(ctx,text,x,y,maxW,lh){
+  let line='',yy=y;
+  for(const ch of text){
+    if(ctx.measureText(line+ch).width>maxW){ctx.fillText(line,x,yy);line=ch;yy+=lh;}
+    else line+=ch;
+  }
+  ctx.fillText(line,x,yy);return yy;
+}
+function wrapLines(ctx,text,x,y,maxW,lh){
+  let line='',yy=y,n=0;
+  for(const ch of text){
+    if(ctx.measureText(line+ch).width>maxW){ctx.fillText(line,x,yy);line=ch;yy+=lh;n++;}
+    else line+=ch;
+  }
+  ctx.fillText(line,x,yy);n++;return n;
+}
+function measureCN(ctx,text,maxW){let n=1,line='';for(const ch of text){if(ctx.measureText(line+ch).width>maxW){n++;line=ch;}else line+=ch;}return n;}
+function downloadShare(){const cv=document.getElementById('shareCv');const a=document.createElement('a');a.download='循塑100_每日一题.png';a.href=cv.toDataURL('image/png');a.click();toast('已保存（演示）');}
+
+/* ============ 弹层 & 工具 ============ */
+function openCards(){document.getElementById('cardMask').classList.add('show');}
+function closeCards(){document.getElementById('cardMask').classList.remove('show');}
+function openCardView(){document.getElementById('cardViewMask').classList.add('show');}
+function closeCardView(){document.getElementById('cardViewMask').classList.remove('show');}
+function openStore(){document.getElementById('storeMask').classList.add('show');}
+function closeStore(){document.getElementById('storeMask').classList.remove('show');}
+function openRecDetail(i){
+  const h=U.history[i]; const q=QB[h.qid];
+  if(!q)return;
+  const opts=q.o.map((o,oi)=>{
+    let cls='rec-opt';
+    if(oi===q.a)cls+=' correct';
+    else if(oi===h.cain&&!h.correct)cls+=' wrong';
+    const mark=oi===q.a?'✓':((oi===h.cain&&!h.correct)?'×':'');
+    return `<div class="${cls}"><b>${mark}</b><span>${o}</span></div>`;
+  }).join('');
+  document.getElementById('recBody').innerHTML=
+    `<div class="rec-detail-q">${q.q}</div><div class="rec-opts">${opts}</div>`+
+    `<div class="rec-src">信息来源：${q.src}</div>`+
+    `<div class="rec-meta">${h.date} · ${h.correct?'答对':'答错'} · +${h.gain} 积分</div>`;
+  document.getElementById('recMask').classList.add('show');
+}
+function closeRec(){document.getElementById('recMask').classList.remove('show');}
+function openBuy(t,price,kind){
+  document.getElementById('buyTitle').firstChild.textContent=`购买 · ${t}`;
+  document.getElementById('buyBody').innerHTML=`
+    <div style="text-align:center;padding:8px 0 14px">
+      <div style="display:inline-block;background:rgba(34,139,34,.08);border-radius:14px;padding:10px 18px;font-size:15px;color:var(--forest-dark);font-weight:700">${t}</div>
+      <div style="margin-top:10px;font-size:22px;font-weight:700;color:var(--earth)">${price}</div>
+      <div style="font-size:12px;color:var(--muted)">类型：${kind}</div>
+    </div>
+    <p style="font-size:12.5px;color:var(--muted);line-height:1.6;background:rgba(135,206,235,.12);border-radius:12px;padding:11px">正式版将跳转微店 / 企业微信人工客服完成购买。Demo 仅作流程演示。</p>
+    <button class="btn block" onclick="mockBuy()">模拟下单</button>`;
+  document.getElementById('buyMask').classList.add('show');
+}
+function mockBuy(){closeBuy();toast('已模拟下单（演示）');}
+function closeBuy(){document.getElementById('buyMask').classList.remove('show');}
+let toastT;function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1600);}
+function save(){localStorage.setItem(LS,JSON.stringify(U));}
+
+/* ============ 导航 ============ */
+function switchTab(el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(el.dataset.v).classList.add('active');
+  if(el.dataset.v==='v-quiz')renderQuiz();
+  if(el.dataset.v==='v-me')renderMe();
+}
+
+/* ============ 初始化 ============ */
+renderPlaza();
+renderPersp();renderIdeas();
+renderMe();
+</script>
+</body>
+</html>
