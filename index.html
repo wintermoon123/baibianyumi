@@ -200,6 +200,13 @@ h2.sec small{font-size:12px;color:var(--muted);font-weight:400;font-family:"Noto
 .bigcard{width:222px;margin:0 auto 14px;border-radius:16px;overflow:hidden;box-shadow:0 10px 24px rgba(40,60,40,.18)}
 .bigcard svg{display:block;width:100%;height:auto}
 .share-canvas{width:100%;border-radius:16px;display:block;border:1px solid var(--line)}
+/* 保存图片层（移动端长按保存） */
+.mask-save{z-index:25;background:rgba(15,25,15,.72)}
+.savesheet{background:#fff;border-radius:22px;max-width:360px;width:100%;max-height:92%;overflow-y:auto;padding:14px 14px 16px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.savehd{display:flex;align-items:center;justify-content:space-between;font-size:14px;font-weight:700;color:var(--forest-dark);margin-bottom:10px;padding:0 2px;gap:8px}
+.savehd .x{font-size:22px;color:var(--muted);line-height:1;cursor:pointer;flex:0 0 auto}
+.savesheet img{width:100%;display:block;border-radius:12px;border:1px solid var(--line)}
+.savetip{font-size:11.5px;color:var(--muted);text-align:center;margin:10px 0 0;line-height:1.65}
 .toast{position:absolute;left:50%;bottom:80px;transform:translateX(-50%);background:rgba(27,60,27,.92);color:#fff;font-size:13px;padding:9px 16px;border-radius:99px;opacity:0;transition:.25s;z-index:30;pointer-events:none}
 .toast.show{opacity:1}
 .foot-note{text-align:center;color:var(--muted);font-size:11px;margin-top:18px;line-height:1.6}
@@ -416,6 +423,16 @@ h2.sec small{font-size:12px;color:var(--muted);font-weight:400;font-family:"Noto
       <div style="text-align:right;margin-bottom:-6px"><span class="x" onclick="closeShare()">×</span></div>
       <canvas id="shareCv" class="share-canvas" width="720" height="1080"></canvas>
       <button class="btn block" style="margin-top:14px" onclick="downloadShare()">保存图片</button>
+    </div>
+  </div>
+
+  <!-- 保存图片层 -->
+  <div class="mask mask-save" id="saveMask" onclick="if(event.target===this)closeSave()">
+    <div class="savesheet">
+      <div class="savehd"><span>长按图片 → 保存到相册</span><span class="x" onclick="closeSave()">×</span></div>
+      <img id="saveImg" alt="分享卡" />
+      <p class="savetip">iPhone 存到「照片」，安卓存到「相册 / 下载」</p>
+      <button class="btn ghost block" style="margin-top:12px" onclick="closeSave()">关闭</button>
     </div>
   </div>
 
@@ -3030,7 +3047,32 @@ function wrapLines(ctx,text,x,y,maxW,lh){
   ctx.fillText(line,x,yy);n++;return n;
 }
 function measureCN(ctx,text,maxW){let n=1,line='';for(const ch of text){if(ctx.measureText(line+ch).width>maxW){n++;line=ch;}else line+=ch;}return n;}
-function downloadShare(){const cv=document.getElementById('shareCv');const a=document.createElement('a');a.download='循塑100_每日一题.png';a.href=cv.toDataURL('image/png');a.click();toast('已保存（演示）');}
+function closeSave(){document.getElementById('saveMask').classList.remove('show');}
+function openSaveLayer(url){
+  const img=document.getElementById('saveImg');
+  img.src=url;
+  document.getElementById('saveMask').classList.add('show');
+}
+function downloadShare(){
+  const cv=document.getElementById('shareCv');
+  let url;
+  try{url=cv.toDataURL('image/png');}
+  catch(e){toast('图片生成失败，请重试');return;}
+  const ua=navigator.userAgent;
+  // 移动端（含微信/QQ 内置浏览器）普遍禁用 a[download]，改走长按保存
+  if(/Android|iPhone|iPad|iPod|Mobile|MicroMessenger|QQ\//i.test(ua)){openSaveLayer(url);return;}
+  try{
+    cv.toBlob(function(blob){
+      if(!blob){openSaveLayer(url);return;}
+      const u=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.href=u;a.download='循塑100_每日一题.png';
+      document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(u),5000);
+      toast('已保存到下载文件夹');
+    },'image/png');
+  }catch(e){openSaveLayer(url);}
+}
 
 /* ============ 弹层 & 工具 ============ */
 function openCards(){document.getElementById('cardMask').classList.add('show');}
